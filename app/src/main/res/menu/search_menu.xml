@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        android:title="Search"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="collapseActionView|always" />
+
+    <item
+        android:id="@+id/item1"
+        android:title="item 1"
+        android:icon="@drawable/ic_menu"
+        app:showAsAction="ifRoom|collapseActionView"
+        >
+
+        <menu>
+
+            <item android:id="@+id/action_labels"
+                android:title="Labels"
+                app:showAsAction="never"/>
+
+            <item android:id="@+id/action_reminders"
+                android:title="Reminders"
+                app:showAsAction="never"/>
+
+            <item android:id="@+id/action_archived"
+                android:title="Archive"
+                app:showAsAction="never"/>
+
+            <item android:id="@+id/action_deleted"
+                android:title="Deleted"
+                app:showAsAction="never"/>
+
+            <item android:id="@+id/action_settings"
+                android:title="Settings"
+                app:showAsAction="never"/>
+
+        </menu>
+
+    </item>
+</menu>

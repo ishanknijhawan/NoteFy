@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/todo"
+        android:icon="@drawable/ic_check_box"
+        android:title="Check list"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/attach_image"
+        android:icon="@drawable/ic_photo"
+        android:title="Image"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/draw_note"
+        android:icon="@drawable/ic_brush_stroke"
+        android:title="Draw"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/shopping_list"
+        android:icon="@drawable/ic_shopping_cart"
+        android:title="Shopping list"
+        app:showAsAction="always"
+        />
+
+</menu>

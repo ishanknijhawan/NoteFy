@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
+    android:id="@+id/lll"
+    android:layout_height="match_parent"
+    tools:context=".ui.TextNoteActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="#FFFFFF"
+        android:id="@+id/cl_textNote"
+        android:layout_height="55dp">
+
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.041"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.555"
+            app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+
+        <ImageView
+            android:id="@+id/iv_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.722"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_pushpin" />
+
+        <ImageView
+            android:id="@+id/iv_reminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.843"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_set_alarm" />
+
+        <ImageView
+            android:id="@+id/iv_archive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.958"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_download_final" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginTop="70dp"
+            android:layout_marginLeft="8dp"
+            android:padding="8dp"
+            android:textSize="21dp"
+            android:textColor="#000"
+            android:autofillHints="Title"
+            android:hint="Title"
+            android:textColorHint="#B2B2B2"
+            android:background="@drawable/simple_white_background"
+            android:id="@+id/et_note_title"
+            android:layout_marginRight="8dp"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginLeft="8dp"
+            android:padding="8dp"
+            android:background="@drawable/simple_white_background"
+            android:hint="Note"
+            android:textSize="17dp"
+            android:textColorHint="#B2B2B2"
+            android:textColor="#383838"
+            android:id="@+id/et_note_content"
+            android:layout_marginRight="8dp"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/reminder_chip"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp"
+            android:text="Tomorrow, 6:55 PM "
+            android:textColor="#4E4E4E"
+            android:theme="@style/ChipTheme"
+            app:chipBackgroundColor="#FFFFFF"
+            app:chipIcon="@drawable/ic_access_alarm_black_small"
+            app:chipStrokeColor="#d3d3d3"
+            app:chipStrokeWidth="1dp" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:padding="8dp"
+        android:id="@+id/ll_toolbar1"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/addMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_add_square_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.041"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.357" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Edited 4:06 PM"
+            android:textColor="#222222"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/menu_menu"
+            app:layout_constraintStart_toStartOf="@+id/addMenu"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/menu_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_menu"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.958"
+            app:layout_constraintStart_toStartOf="@+id/addMenu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.411" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:elevation="15dp"
+        android:id="@+id/bottomSheet"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        android:layout_height="wrap_content">
+
+        <LinearLayout android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:background="#FFFFFF"
+            android:padding="10dp"
+            android:id="@+id/ll_bs1"
+            android:elevation="10dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Take photo"
+                android:textSize="16dp"
+                android:textColor="#222222"
+                android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/ic_camera_alt"
+                android:padding="4dp"
+                android:drawablePadding="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Choose image"
+                android:textSize="16dp"
+                android:textColor="#222222"
+                android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/ic_picture"
+                android:padding="4dp"
+                android:drawablePadding="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Drawing"
+                android:textSize="16dp"
+                android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/ic_paint_brush"
+                android:padding="4dp"
+                android:textColor="#222222"
+                android:drawablePadding="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Recording"
+                android:textSize="16dp"
+                android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/ic_voice_amplifier_outline"
+                android:padding="4dp"
+                android:textColor="#222222"
+                android:drawablePadding="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Tick boxes"
+                android:textSize="16dp"
+                android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/ic_check_box"
+                android:padding="4dp"
+                android:textColor="#222222"
+                android:drawablePadding="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:elevation="15dp"
+        android:id="@+id/bottomSheet2"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        android:layout_height="wrap_content">
+
+        <LinearLayout android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:background="#FFFFFF"
+            android:padding="10dp"
+            android:elevation="10dp"
+            android:id="@+id/ll_bs2"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Delete"
+                android:textSize="16dp"
+                android:textColor="#222222"
+                android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/ic_delete"
+                android:padding="4dp"
+                android:drawablePadding="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Send"
+                android:textSize="16dp"
+                android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/ic_share_black_24dp"
+                android:padding="4dp"
+                android:textColor="#222222"
+                android:drawablePadding="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Add location"
+                android:textSize="16dp"
+                android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/ic_location_on_black_final"
+                android:padding="4dp"
+                android:textColor="#222222"
+                android:drawablePadding="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Colors"
+                android:id="@+id/bs_colours"
+                android:textSize="16dp"
+                android:textColor="#222222"
+                android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/ic_palette"
+                android:padding="4dp"
+                android:drawablePadding="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Labels"
+                android:id="@+id/bs_labels"
+                android:textSize="16dp"
+                android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/ic_tag"
+                android:padding="4dp"
+                android:textColor="#222222"
+                android:drawablePadding="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

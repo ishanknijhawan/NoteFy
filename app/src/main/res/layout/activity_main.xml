@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:id="@+id/fl_main"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    tools:context=".ui.MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        app:title="NoteFy"
+        app:titleTextColor="#222222"
+        app:titleMargin="8dp"
+        android:elevation="8dp"
+        android:id="@+id/toolbar2"
+        app:menu="@menu/search_menu"
+        android:layout_height="55dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/rv_main_list"
+        android:layout_marginTop="55dp"
+        android:layout_height="match_parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        app:fabSize="auto"
+        android:id="@+id/fabSpeedDial"
+        android:backgroundTint="#FFFFFF"
+        android:src="@drawable/ic_add"
+        android:elevation="5dp"
+        app:layout_anchor="@id/bottom_app_bar"/>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottom_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        app:backgroundTint="#80FF9933"
+        app:fabAlignmentMode="end"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

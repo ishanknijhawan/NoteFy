@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_check_pin"
+        android:title="Search"
+        android:icon="@drawable/ic_pushpin"
+        app:showAsAction="collapseActionView|always" />
+
+    <item
+        android:id="@+id/action_check_archive"
+        android:title="Search"
+        android:icon="@drawable/ic_download_final"
+        app:showAsAction="collapseActionView|always" />
+
+    <item
+        android:id="@+id/action_check_save"
+        android:title="Search"
+        android:icon="@drawable/ic_check_black_24dp"
+        app:showAsAction="collapseActionView|always" />
+
+</menu>
