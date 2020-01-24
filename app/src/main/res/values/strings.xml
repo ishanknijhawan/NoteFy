@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NoteFy</string>
+    <string name="drawer_open">Navigation Drawer Open</string>
+    <string name="drawer_close">Navigation Drawer Close</string>
 </resources>

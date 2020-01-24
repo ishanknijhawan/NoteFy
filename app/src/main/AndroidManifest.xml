@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ishanknijhawan.notefy">
 
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_notes"
@@ -9,10 +10,17 @@
         android:roundIcon="@mipmap/ic_launcher_notes_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.MainActivity"></activity>
-        <activity android:name=".ui.TextNoteActivity"
-            android:theme="@style/TextNoteTheme"/>
-        <activity android:name=".SplashActivity"
+        <activity android:name=".ui.fingerPrintActivity"></activity>
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:theme="@style/SteeingsTheme" />
+        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.MainActivity" />
+        <activity
+            android:name=".ui.TextNoteActivity"
+            android:theme="@style/TextNoteTheme" />
+        <activity
+            android:name=".ui.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

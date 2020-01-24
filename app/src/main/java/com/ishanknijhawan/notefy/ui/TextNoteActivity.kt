@@ -10,7 +10,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.ColorInt
@@ -23,7 +22,6 @@ import com.ishanknijhawan.notefy.Db.NoteDatabase
 import com.ishanknijhawan.notefy.Entity.Note
 import com.ishanknijhawan.notefy.R
 import kotlinx.android.synthetic.main.activity_text_note.*
-import kotlinx.android.synthetic.main.activity_text_note.view.*
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.clearTask
 import org.jetbrains.anko.intentFor
@@ -49,11 +47,10 @@ class TextNoteActivity : AppCompatActivity() {
         lateinit var contentNote: EditText
         var noteColor: Int = 0
         var finalColor: Int = -1
-        var date_time = ""
+        var dateTime = ""
         var mYear: Int = 0
         var mMonth: Int = 0
         var mDay: Int= 0
-
         var mHour: Int= 0
         var mMinute: Int= 0
 
@@ -264,7 +261,7 @@ class TextNoteActivity : AppCompatActivity() {
         val datePickerDialog = DatePickerDialog(
             this,
             OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                date_time = dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
+                dateTime = dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
                 //*************Call Time Picker Here ********************
                 tiemPicker()
             }, mYear, mMonth, mDay
@@ -282,7 +279,7 @@ class TextNoteActivity : AppCompatActivity() {
             OnTimeSetListener { view, hourOfDay, minute ->
                 mHour = hourOfDay
                 mMinute = minute
-                Toast.makeText(this,"$date_time $hourOfDay:$minute",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"$dateTime $hourOfDay:$minute",Toast.LENGTH_SHORT).show()
             }, mHour, mMinute, false
         )
         timePickerDialog.show()

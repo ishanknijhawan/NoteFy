@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -27,6 +28,8 @@ class MainActivity : AppCompatActivity() {
             .fallbackToDestructiveMigration()
             .build()
     }
+
+    //github repo link: https://github.com/ishanknijhawan/Note-Fy.git
 
     var noteList= arrayListOf<Note>()
 
@@ -54,8 +57,11 @@ class MainActivity : AppCompatActivity() {
         toolbar2.setOnMenuItemClickListener { arg0 ->
             if (arg0.itemId == R.id.action_search)
                 Toast.makeText(this@MainActivity,"search",Toast.LENGTH_SHORT).show()
-            else if (arg0.itemId == R.id.action_settings)
-                Toast.makeText(this@MainActivity,"settings",Toast.LENGTH_SHORT).show()
+            else if (arg0.itemId == R.id.action_settings){
+                val intent = Intent(this,SettingsActivity::class.java)
+                startActivity(intent)
+                //Toast.makeText(this@MainActivity,"settings",Toast.LENGTH_SHORT).show()
+            }
             else if (arg0.itemId == R.id.action_reminders)
                 Toast.makeText(this@MainActivity,"reminders",Toast.LENGTH_SHORT).show()
             else if (arg0.itemId == R.id.action_deleted)
