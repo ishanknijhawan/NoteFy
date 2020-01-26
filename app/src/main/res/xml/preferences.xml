@@ -38,7 +38,7 @@
     <PreferenceCategory android:title="PRIVACY">
         <SwitchPreference
             android:key="switch4"
-            android:icon="@drawable/ic_fingerprint"
+            android:icon="@drawable/ic_fingerprint_pink"
             android:title="Enable Fingerprint lock"/>
 
         <Preference

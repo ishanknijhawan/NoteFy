@@ -11,7 +11,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.google.firebase.auth.FirebaseAuth
 import com.ishanknijhawan.notefy.R
+import com.ishanknijhawan.notefy.ui.FinalLoginActivity
 import com.ishanknijhawan.notefy.ui.MainActivity
 
 
@@ -67,9 +69,17 @@ class FingerprintHandler(context: Context) :
                 R.color.colorGreen
             ))
             imageView.setImageResource(R.drawable.ic_check_green)
-            val intent = Intent(context,MainActivity::class.java)
-            context.startActivity(intent)
-            context.finish()
+
+            if (FirebaseAuth.getInstance().currentUser == null){
+                val intent = Intent(context,FinalLoginActivity::class.java)
+                context.startActivity(intent)
+                context.finish()
+            }
+            else {
+                val intent = Intent(context,MainActivity::class.java)
+                context.startActivity(intent)
+                context.finish()
+            }
         }
     }
 

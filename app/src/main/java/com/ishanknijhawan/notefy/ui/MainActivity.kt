@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.room.Room
+import com.google.firebase.auth.FirebaseAuth
 import com.ishanknijhawan.notefy.Adapter.NoteAdapter
 import com.ishanknijhawan.notefy.Db.NoteDatabase
 import com.ishanknijhawan.notefy.Entity.Note
@@ -107,6 +108,10 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this,"draw note",Toast.LENGTH_SHORT).show()
             }
             R.id.shopping_list -> {
+//                FirebaseAuth.getInstance().signOut()
+//                val intent = Intent(this,LoginAcvtivity::class.java)
+//                startActivity(intent)
+//                finish()
                 Toast.makeText(this,"shopping list",Toast.LENGTH_SHORT).show()
             }
 

@@ -10,7 +10,7 @@ import com.ishanknijhawan.notefy.Dao.NoteDao
 import com.ishanknijhawan.notefy.Entity.Note
 
 
-@Database(entities = [Note::class],version = 1)
+@Database(entities = [Note::class],version = 2)
 abstract class NoteDatabase : RoomDatabase() {
     abstract fun noteDao() : NoteDao
 }
