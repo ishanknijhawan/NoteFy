@@ -18,26 +18,31 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="NOTES">
-        <ListPreference
-            android:dialogTitle="Choose action"
-            android:icon="@drawable/ic_swipe"
-            android:entries="@array/settings_list_preference_titles"
-            android:entryValues="@array/settings_list_preference_values"
-            android:key="list"
-            android:defaultValue="None"
-            android:summary="None"
-            android:title="Swipe notes to perform action" />
 
         <SwitchPreference
             android:key="switch_ask"
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:icon="@drawable/ic_problem"
-            android:title="Confirm before deleting notes"/>
+            android:title="Ask before deleting/archive"/>
+
+        <SwitchPreference
+            android:key="switch_left"
+            android:defaultValue="true"
+            android:icon="@drawable/ic_delete_final"
+            android:title="Swipe left to delete note"/>
+
+        <SwitchPreference
+            android:key="switch_right"
+            android:defaultValue="true"
+            android:icon="@drawable/ic_download_final"
+            android:title="Swipe right to archive note"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="PRIVACY">
         <SwitchPreference
             android:key="switch4"
+            android:defaultValue="false"
             android:icon="@drawable/ic_fingerprint_pink"
             android:title="Enable Fingerprint lock"/>
 

@@ -1,6 +1,7 @@
 package com.ishanknijhawan.notefy.ui
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -87,16 +88,15 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
     }
 
     override fun onBackPressed() {
+        val intent = Intent(this,MainActivity::class.java)
+        startActivity(intent)
         super.onBackPressed()
-        finish()
     }
 
     class SettingsFragment : PreferenceFragment() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             addPreferencesFromResource(R.xml.preferences)
-
-            bindPreferenceSummaryToValue(findPreference("list"))
         }
     }
 

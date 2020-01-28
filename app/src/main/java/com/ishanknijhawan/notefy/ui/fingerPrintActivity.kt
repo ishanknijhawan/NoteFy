@@ -40,16 +40,16 @@ class fingerPrintActivity : AppCompatActivity() {
             val keyguardService = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
 
             if (!fingerprintManager.isHardwareDetected){
-                Toast.makeText(this,"fingerprint scanner not detected",Toast.LENGTH_SHORT).show()
+                tv_main_text.text = "Fingerprint scanner not detected"
             }
             else if (ContextCompat.checkSelfPermission(this,Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(this,"permission not granted",Toast.LENGTH_SHORT).show()
+                tv_main_text.text = "Permission not granted"
             }
             else if(!keyguardService.isKeyguardSecure){
-                Toast.makeText(this,"please lock your phone",Toast.LENGTH_SHORT).show()
+                tv_main_text.text = "Please lock your phone"
             }
             else if (!fingerprintManager.hasEnrolledFingerprints()){
-                Toast.makeText(this,"no fingerprint registered",Toast.LENGTH_SHORT).show()
+                tv_main_text.text = "No fingerprint registered"
             }
             else {
                 tv_main_text.text = "Touch the fingerprint sensor"

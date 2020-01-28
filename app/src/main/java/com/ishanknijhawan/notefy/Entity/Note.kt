@@ -12,8 +12,8 @@ data class Note(
     var id: Long?=null,
     val title: String,
     val description: String,
-    val label: String,
-    val bookmark: Boolean,
-    val archive: Boolean,
+    var label: String,
+    var bookmark: Boolean,
+    var archive: Boolean,
     var color: Int = Color.parseColor("#FFFFFF")
 )

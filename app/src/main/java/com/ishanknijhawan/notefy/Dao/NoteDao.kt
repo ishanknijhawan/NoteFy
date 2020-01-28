@@ -8,7 +8,7 @@ import com.ishanknijhawan.notefy.Entity.Note
 interface NoteDao {
 
     @Insert
-    fun insert(note: Note)
+    fun insert(note: Note): Long
 
     @Update
     fun update(note: Note)
@@ -19,8 +19,8 @@ interface NoteDao {
     @Query("DELETE FROM note_table")
     fun deleteAll()
 
-    @Query("SELECT * FROM note_table ORDER BY id DESC")
-    fun getAllNotes(): List<Note>
+    @Query("SELECT * FROM note_table WHERE archive=0 ORDER BY id DESC")
+    fun getAllNotes(): LiveData<List<Note>>
 
 
 }

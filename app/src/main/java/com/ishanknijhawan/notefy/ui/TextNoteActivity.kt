@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.TypedArray
 import android.graphics.Color
@@ -14,6 +15,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import androidx.room.Room
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
@@ -21,11 +23,9 @@ import com.ishanknijhawan.notefy.Adapter.NoteAdapter
 import com.ishanknijhawan.notefy.Db.NoteDatabase
 import com.ishanknijhawan.notefy.Entity.Note
 import com.ishanknijhawan.notefy.R
+import com.ishanknijhawan.notefy.ViewModel.ViewModel
 import kotlinx.android.synthetic.main.activity_text_note.*
-import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.clearTask
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.newTask
+import org.jetbrains.anko.*
 import petrov.kristiyan.colorpicker.ColorPicker
 import petrov.kristiyan.colorpicker.ColorPicker.OnFastChooseColorListener
 import java.util.*
@@ -33,18 +33,10 @@ import java.util.*
 
 class TextNoteActivity : AppCompatActivity() {
 
-    val db : NoteDatabase by lazy {
-        Room.databaseBuilder(this,
-            NoteDatabase::class.java,
-            "note.db"
-        ).allowMainThreadQueries()
-            .fallbackToDestructiveMigration()
-            .build()
-    }
-    var noteList= arrayListOf<Note>()
-
         lateinit var titleNote: EditText
         lateinit var contentNote: EditText
+        lateinit var viewModel: ViewModel
+
         var noteColor: Int = 0
         var finalColor: Int = -1
         var dateTime = ""
@@ -76,6 +68,7 @@ class TextNoteActivity : AppCompatActivity() {
         reminder_chip.setOnCheckedChangeListener { compoundButton, b ->
             Toast.makeText(this,"Checked $b",Toast.LENGTH_SHORT).show()
         }
+        reminder_chip.visibility = View.GONE
 
         bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -204,6 +197,9 @@ class TextNoteActivity : AppCompatActivity() {
             titleNote.setText(title)
             contentNote.setText(description)
 
+            titleNote.hintTextColor = darkenColorHint(finalColor)
+            contentNote.hintTextColor = darkenColorHint(finalColor)
+
             lll.backgroundColor = finalColor
             ll_bs1.backgroundColor = finalColor
             ll_bs2.backgroundColor = finalColor
@@ -262,14 +258,14 @@ class TextNoteActivity : AppCompatActivity() {
             this,
             OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 dateTime = dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
-                //*************Call Time Picker Here ********************
-                tiemPicker()
+                //Call Time Picker Here
+                timePicker()
             }, mYear, mMonth, mDay
         )
         datePickerDialog.show()
     }
 
-    private fun tiemPicker() { // Get Current Time
+    private fun timePicker() { // Get Current Time
         val c = Calendar.getInstance()
         mHour = c[Calendar.HOUR_OF_DAY]
         mMinute = c[Calendar.MINUTE]
@@ -296,6 +292,9 @@ class TextNoteActivity : AppCompatActivity() {
         reminder_chip.chipBackgroundColor = ColorStateList.valueOf(color)
         reminder_chip.chipStrokeColor = ColorStateList.valueOf(darkenColor(color))
 
+        titleNote.hintTextColor = darkenColorHint(color)
+        contentNote.hintTextColor = darkenColorHint(color)
+
         if (color != -1)
         window.navigationBarColor = darkenColor(color)
         else
@@ -313,6 +312,14 @@ class TextNoteActivity : AppCompatActivity() {
         })
     }
 
+    @ColorInt
+    fun darkenColorHint(@ColorInt color: Int): Int {
+        return Color.HSVToColor(FloatArray(3).apply {
+            Color.colorToHSV(color, this)
+            this[2] *= 0.7f
+        })
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -320,17 +327,19 @@ class TextNoteActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         val rq = intent.getStringExtra("REQUEST_CODE")
-        super.onBackPressed()
         if (rq == "poochi"){
             updateNote()
         }
         else {
             saveNote()
         }
-
+        super.onBackPressed()
     }
 
     private fun saveNote() {
+
+        viewModel = ViewModelProviders.of(this).get(ViewModel::class.java)
+
         val finalTitle = titleNote.text.toString()
         val content = contentNote.text.toString()
 
@@ -343,7 +352,7 @@ class TextNoteActivity : AppCompatActivity() {
         }
 
         else {
-            db.noteDao().insert(
+            viewModel.insert(
                 Note(title = finalTitle,
                     description = content,
                     archive = false,
@@ -355,20 +364,17 @@ class TextNoteActivity : AppCompatActivity() {
             Log.i("TAG","value of title is $finalTitle")
             Log.i("TAG","value of description is $content")
             Log.i("TAG","value of color while saving is $noteColor")
+
             finish()
 
-            noteList = db.noteDao().getAllNotes() as ArrayList<Note>
-            NoteAdapter(noteList,this).updateTasks(noteList)
-
         }
-
-        startActivity(intentFor<MainActivity>().newTask().clearTask())
     }
 
     private fun updateNote() {
+        viewModel = ViewModelProviders.of(this).get(ViewModel::class.java)
+
         val finalTitle = titleNote.text.toString()
         val content = contentNote.text.toString()
-        val finalColor2 = intent.getIntExtra("INTENT_COLOR",-1)
 
         val note = Note(title = finalTitle,
             description = content,
@@ -381,58 +387,16 @@ class TextNoteActivity : AppCompatActivity() {
 
         if (finalTitle == "" && content == "") {
             Toast.makeText(this,"Empty note discarded",Toast.LENGTH_SHORT).show()
-            //Snackbar.make(lll,"Empty note discarded",Snackbar.LENGTH_SHORT).show()
         }
 
         else {
-            db.noteDao().update(note)
+            viewModel.update(note)
 
             Log.i("TAG","value of title is $finalTitle")
             Log.i("TAG","value of description is $content")
             Log.i("TAG","value of color while updating is $noteColor")
-
-            noteList = db.noteDao().getAllNotes() as ArrayList<Note>
-            NoteAdapter(noteList,this).updateTasks(noteList)
         }
-
-//        val intent = Intent(this, MainActivity::class.java)
-//        startActivity(intent)
-//        this.finish()
-        startActivity(intentFor<MainActivity>().newTask().clearTask())
+        finish()
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        //return super.onCreateOptionsMenu(menu)
-//        val inflator = menuInflater
-//        inflator.inflate(R.menu.text_note_menu,menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        val parentLayout = findViewById<View>(android.R.id.content)
-//        val rq = intent.getStringExtra("REQUEST_CODE")
-//        setContentView(R.layout.activity_text_note)
-//        if (item.itemId == R.id.action_check_save) {
-//            if (rq == "poochi"){
-//                updateNote()
-//            }
-//            else {
-//                saveNote()
-//            }
-////            intent.putExtra("TITLE",et_note_title.text.toString())
-////            intent.putExtra("NOTE",et_note_content.text.toString())
-//        }
-//        else if (item.itemId == R.id.action_check_pin) {
-//            Snackbar.make(parentLayout,"Note pinned",Snackbar.LENGTH_SHORT).show()
-//        }
-//        else if (item.itemId == R.id.action_check_archive) {
-//            Snackbar.make(parentLayout, "Added to archive", Snackbar.LENGTH_LONG)
-//                .setActionTextColor(Color.parseColor("#FFA500"))
-//                .setAction("Undo")
-//                { Toast.makeText(this@TextNoteActivity,"clicked undo",Toast.LENGTH_SHORT).show() }
-//                .show()
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 
 }

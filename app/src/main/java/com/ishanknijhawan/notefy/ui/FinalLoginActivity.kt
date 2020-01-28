@@ -1,6 +1,8 @@
 package com.ishanknijhawan.notefy.ui
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,13 +21,18 @@ import kotlinx.android.synthetic.main.activity_final_login.*
 class FinalLoginActivity : AppCompatActivity() {
 
     lateinit var gso: GoogleSignInOptions
-    lateinit var googleSignInClient : GoogleSignInClient
     val RC_SIGN_IN = 1
-    private lateinit var auth: FirebaseAuth
+
+    companion object {
+        lateinit var googleSignInClient : GoogleSignInClient
+        lateinit var auth: FirebaseAuth
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_final_login)
+
+        auth = FirebaseAuth.getInstance()
 
         gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -33,9 +40,7 @@ class FinalLoginActivity : AppCompatActivity() {
             .build()
         googleSignInClient = GoogleSignIn.getClient(this,gso)
 
-        auth = FirebaseAuth.getInstance()
-
-        btnSignIn.setOnClickListener {
+        sign_in_button.setOnClickListener {
             signIn()
             //Toast.makeText(this,"working",Toast.LENGTH_SHORT).show()
         }
@@ -58,6 +63,9 @@ class FinalLoginActivity : AppCompatActivity() {
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account!!)
             } catch (e: ApiException) {
+                if(!netConnection()){
+                    Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show()
+                }
                 // Google Sign In failed, update UI appropriately
                 Log.i("FIR", "Google sign in failed", e)
                 // ...
@@ -87,9 +95,16 @@ class FinalLoginActivity : AppCompatActivity() {
             }
     }
 
+    private fun netConnection(): Boolean {
+        val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val ni = cm.activeNetworkInfo
+        return ni != null && ni.isConnected
+    }
+
     private fun updateUI(user: FirebaseUser?) {
         val intent = Intent(this,MainActivity::class.java)
         startActivity(intent)
-        Toast.makeText(baseContext,"Logged in as ${user?.displayName}",Toast.LENGTH_SHORT).show()
+        finish()
+        Toast.makeText(baseContext,"Welcome ${user?.displayName} ",Toast.LENGTH_SHORT).show()
     }
 }

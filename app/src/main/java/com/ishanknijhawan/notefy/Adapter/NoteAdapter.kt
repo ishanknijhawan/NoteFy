@@ -16,6 +16,7 @@ import androidx.room.Room
 import com.ishanknijhawan.notefy.Db.NoteDatabase
 import com.ishanknijhawan.notefy.Entity.Note
 import com.ishanknijhawan.notefy.R
+import com.ishanknijhawan.notefy.ui.MainActivity
 import com.ishanknijhawan.notefy.ui.TextNoteActivity
 import kotlinx.android.synthetic.main.activity_text_note.view.*
 import kotlinx.android.synthetic.main.item_note_layout.view.*
@@ -24,7 +25,7 @@ import org.jetbrains.anko.backgroundColor
 
 lateinit var mActionMode : ActionMode
 
-class NoteAdapter(var items: ArrayList<Note>, val context: Context)
+class NoteAdapter(var items: List<Note>, val context: Context)
     : RecyclerView.Adapter<ViewHolder>() {
 
     val db: NoteDatabase by lazy {
@@ -36,11 +37,6 @@ class NoteAdapter(var items: ArrayList<Note>, val context: Context)
             .build()
     }
 
-    fun updateTasks(newTasks: ArrayList<Note>) {
-        items.clear()
-        items.addAll(newTasks)
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_note_layout,parent,false))

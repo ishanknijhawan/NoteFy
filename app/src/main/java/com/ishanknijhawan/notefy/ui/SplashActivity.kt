@@ -20,15 +20,11 @@ class SplashActivity : AppCompatActivity() {
         askforFingerPrint()
     }
 
-//    override fun onStart() {
-//        super.onStart()
+//    override fun onRestart() {
+//        super.onRestart()
 //        askforFingerPrint()
 //    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//        askforFingerPrint()
-//    }
+
 
     private fun askforFingerPrint() {
 
