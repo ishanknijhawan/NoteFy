@@ -27,13 +27,13 @@
 
         <SwitchPreference
             android:key="switch_left"
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:icon="@drawable/ic_delete_final"
             android:title="Swipe left to delete note"/>
 
         <SwitchPreference
             android:key="switch_right"
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:icon="@drawable/ic_download_final"
             android:title="Swipe right to archive note"/>
 
@@ -52,7 +52,7 @@
             <intent
                 android:action="com.chikeandroid.settingsscreendemo.SETTING_START_ACTIVITY"
                 android:targetClass="com.ishanknijhawan.notefy.ui.LoginActivity"
-                android:targetPackage="com.ishanknijhawan.notefy" />
+                android:targetPackage="com.ishanknijhawan.notefy.ui" />
         </Preference>
     </PreferenceCategory>
 

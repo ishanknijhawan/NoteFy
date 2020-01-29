@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:id="@+id/rv_main_list"
             android:layout_marginTop="55dp"
+            android:padding="4dp"
             android:layout_height="match_parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

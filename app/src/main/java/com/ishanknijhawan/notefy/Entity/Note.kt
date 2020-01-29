@@ -14,6 +14,7 @@ data class Note(
     val description: String,
     var label: String,
     var bookmark: Boolean,
+    var deleted: Boolean,
     var archive: Boolean,
     var color: Int = Color.parseColor("#FFFFFF")
 )

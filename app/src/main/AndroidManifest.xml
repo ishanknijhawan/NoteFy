@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_notes_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.FinalLoginActivity"></activity>
+        <activity android:name=".ui.DeletedActivity"></activity>
+        <activity android:name=".ui.ArchiveActivity" />
+        <activity android:name=".ui.FinalLoginActivity" />
         <activity android:name=".ui.fingerPrintActivity" />
         <activity
             android:name=".ui.SettingsActivity"

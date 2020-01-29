@@ -23,20 +23,8 @@ import kotlinx.android.synthetic.main.item_note_layout.view.*
 import org.jetbrains.anko.backgroundColor
 
 
-lateinit var mActionMode : ActionMode
-
 class NoteAdapter(var items: List<Note>, val context: Context)
     : RecyclerView.Adapter<ViewHolder>() {
-
-    val db: NoteDatabase by lazy {
-        Room.databaseBuilder(context,
-            NoteDatabase::class.java,
-            "todo.db"
-        ).allowMainThreadQueries()
-            .fallbackToDestructiveMigration()
-            .build()
-    }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_note_layout,parent,false))
@@ -69,23 +57,35 @@ class NoteAdapter(var items: List<Note>, val context: Context)
             holder.tvNoteView.visibility = View.GONE
         }
 
-        holder.itemView.setOnClickListener {
-            //Toast.makeText(context,"Clicked",Toast.LENGTH_SHORT).show()
-            val intent = Intent(context,TextNoteActivity::class.java)
-            intent.putExtra("REQUEST_CODE","poochi")
-            intent.putExtra("INTENT_TITLE",holder.tvTitleView.text.toString())
-            intent.putExtra("INTENT_NOTE",holder.tvNoteView.text.toString())
-            intent.putExtra("INTENT_NOTE_ID",items[position].id)
-            intent.putExtra("INTENT_COLOR",items[position].color)
+        if (!items[position].deleted){
+            holder.itemView.setOnClickListener {
+                //Toast.makeText(context,"Clicked",Toast.LENGTH_SHORT).show()
+                val intent = Intent(context,TextNoteActivity::class.java)
+                intent.putExtra("REQUEST_CODE","poochi")
+                intent.putExtra("INTENT_TITLE",holder.tvTitleView.text.toString())
+                intent.putExtra("INTENT_NOTE",holder.tvNoteView.text.toString())
+                intent.putExtra("INTENT_NOTE_ID",items[position].id)
+                intent.putExtra("INTENT_COLOR",items[position].color)
 
-            Log.i("QWE","value of title in Adapter is ${holder.tvTitleView.text}")
-            Log.i("QWE","value of note in Adapter is ${holder.tvNoteView.text}")
-            Log.i("QWE","value of color in Adapter is ${items[position].color}")
+                if (items[position].bookmark)
+                    intent.putExtra("BOOL","true")
+                else
+                    intent.putExtra("BOOL","false")
 
-            context.startActivity(intent)
-        }
-        holder.itemView.setOnLongClickListener {
-            return@setOnLongClickListener true
+                if (items[position].archive)
+                    intent.putExtra("ARC","true")
+                else
+                    intent.putExtra("ARC","false")
+
+                Log.i("QWE","value of title in Adapter is ${holder.tvTitleView.text}")
+                Log.i("QWE","value of note in Adapter is ${holder.tvNoteView.text}")
+                Log.i("QWE","value of color in Adapter is ${items[position].color}")
+                Log.i("QWE","value of bookmark is ${items[position].bookmark}")
+                Log.i("QWE","value of archive is ${items[position].archive}")
+
+                context.startActivity(intent)
+            }
+
         }
     }
 

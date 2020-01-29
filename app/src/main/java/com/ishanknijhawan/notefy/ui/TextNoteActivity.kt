@@ -4,7 +4,6 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.TypedArray
 import android.graphics.Color
@@ -15,12 +14,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProviders
-import androidx.room.Room
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
-import com.ishanknijhawan.notefy.Adapter.NoteAdapter
-import com.ishanknijhawan.notefy.Db.NoteDatabase
 import com.ishanknijhawan.notefy.Entity.Note
 import com.ishanknijhawan.notefy.R
 import com.ishanknijhawan.notefy.ViewModel.ViewModel
@@ -37,6 +34,10 @@ class TextNoteActivity : AppCompatActivity() {
         lateinit var contentNote: EditText
         lateinit var viewModel: ViewModel
 
+        var bigArchive: Boolean = false
+        var bigBookmark: Boolean = false
+        var bigDelete: Boolean = false
+
         var noteColor: Int = 0
         var finalColor: Int = -1
         var dateTime = ""
@@ -50,8 +51,40 @@ class TextNoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_text_note)
 
+        viewModel = ViewModelProviders.of(this).get(ViewModel::class.java)
+
         val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         val bottomSheetBehavior2 = BottomSheetBehavior.from(bottomSheet2)
+
+        val rq1 = intent.getStringExtra("REQUEST_CODE")
+
+        if (rq1 == "poochi") {
+            val bool = intent.getStringExtra("BOOL")
+            if (bool == "true"){
+                iv_pin.setImageResource(android.R.color.transparent)
+                iv_pin.setBackgroundResource(R.drawable.ic_push_pin_black_final)
+            }
+            else if(bool == "false"){
+                Log.i("BG","setting this bg")
+                iv_pin.setImageResource(android.R.color.transparent)
+                iv_pin.setBackgroundResource(R.drawable.ic_push_pin_final)
+            }
+
+            val arc = intent.getStringExtra("ARC")
+            if (arc == "false"){
+                iv_archive.setImageResource(android.R.color.transparent)
+                iv_archive.setBackgroundResource(R.drawable.ic_archive_black_24dp)
+            }
+            else if (arc == "true"){
+                Log.i("BG","setting this bg")
+                iv_archive.setImageResource(android.R.color.transparent)
+                iv_archive.setBackgroundResource(R.drawable.ic_unarchive_black_24dp)
+            }
+        }
+        else {
+            iv_pin.setBackgroundResource(R.drawable.ic_push_pin_final)
+            iv_archive.setBackgroundResource(R.drawable.ic_archive_black_24dp)
+        }
 
         iv_reminder.setOnClickListener {
             datePickerFunction()
@@ -161,6 +194,7 @@ class TextNoteActivity : AppCompatActivity() {
             else {
                 saveNote()
             }
+            finish()
         }
 
         iv_archive.setOnClickListener {
@@ -172,13 +206,22 @@ class TextNoteActivity : AppCompatActivity() {
         }
 
         iv_pin.setOnClickListener {
-            Snackbar.make(it,"Note pinned", Snackbar.LENGTH_SHORT).show()
+            if (iv_pin.background.constantState == resources.getDrawable(R.drawable.ic_push_pin_final).constantState){
+                iv_pin.setBackgroundResource(R.drawable.ic_push_pin_black_final)
+                bigBookmark = true
+                updateNote()
+            }
+            else if(iv_pin.background.constantState == resources.getDrawable(R.drawable.ic_push_pin_black_final).constantState) {
+                iv_pin.setBackgroundResource(R.drawable.ic_push_pin_final)
+                bigBookmark = false
+                updateNote()
+            }
+
         }
 
         if (rq == "poochi"){
             val title = intent.getStringExtra("INTENT_TITLE")
             val description = intent.getStringExtra("INTENT_NOTE")
-            //val color = intent.getIntExtra("INTENT_COLOR",Color.parseColor("#ffffff"))
             finalColor = intent.getIntExtra("INTENT_COLOR",-1)
 
             if (finalColor == 0)
@@ -206,7 +249,7 @@ class TextNoteActivity : AppCompatActivity() {
             ll_toolbar1.backgroundColor = finalColor
             titleNote.backgroundColor = finalColor
             contentNote.backgroundColor = finalColor
-            window.statusBarColor = darkenColor(finalColor)
+            window.statusBarColor = darkenColorHint(finalColor)
             cl_textNote.backgroundColor = finalColor
             reminder_chip.chipBackgroundColor = ColorStateList.valueOf(finalColor)
             reminder_chip.chipStrokeColor = ColorStateList.valueOf(darkenColor(finalColor))
@@ -299,7 +342,7 @@ class TextNoteActivity : AppCompatActivity() {
         window.navigationBarColor = darkenColor(color)
         else
             window.navigationBarColor = Color.parseColor("#000000")
-        window.statusBarColor = darkenColor(color)
+        window.statusBarColor = darkenColorHint(color)
 
         rb.recycle()
     }
@@ -333,12 +376,11 @@ class TextNoteActivity : AppCompatActivity() {
         else {
             saveNote()
         }
+        finish()
         super.onBackPressed()
     }
 
     private fun saveNote() {
-
-        viewModel = ViewModelProviders.of(this).get(ViewModel::class.java)
 
         val finalTitle = titleNote.text.toString()
         val content = contentNote.text.toString()
@@ -346,18 +388,18 @@ class TextNoteActivity : AppCompatActivity() {
         if (finalColor != -1)
             window.statusBarColor = darkenColor(finalColor)
 
-        if (finalTitle == "" && content == "") {
+        if (finalTitle.isEmpty() && content.isEmpty()) {
             Toast.makeText(this,"Empty note discarded",Toast.LENGTH_SHORT).show()
-            //Snackbar.make(lll,"Empty note discarded",Snackbar.LENGTH_SHORT).show()
         }
 
         else {
             viewModel.insert(
                 Note(title = finalTitle,
                     description = content,
-                    archive = false,
+                    archive = bigArchive,
                     label = "home",
-                    bookmark = false,
+                    bookmark = bigBookmark,
+                    deleted = bigDelete,
                     color = finalColor)
             )
 
@@ -365,27 +407,32 @@ class TextNoteActivity : AppCompatActivity() {
             Log.i("TAG","value of description is $content")
             Log.i("TAG","value of color while saving is $noteColor")
 
-            finish()
-
         }
     }
 
     private fun updateNote() {
-        viewModel = ViewModelProviders.of(this).get(ViewModel::class.java)
+        val rq = intent.getStringExtra("REQUEST_CODE")
+
+        if (rq == "poochi") {
+            val arc = intent.getStringExtra("ARC")
+            bigArchive = arc == "true"
+        }
 
         val finalTitle = titleNote.text.toString()
         val content = contentNote.text.toString()
 
         val note = Note(title = finalTitle,
             description = content,
-            archive = false,
+            archive = bigArchive,
             label = "home",
-            bookmark = false,
+            bookmark = bigBookmark,
+            deleted = bigDelete,
             color = finalColor)
 
         note.id = intent.getLongExtra("INTENT_NOTE_ID",-1)
 
         if (finalTitle == "" && content == "") {
+            viewModel.delete(note)
             Toast.makeText(this,"Empty note discarded",Toast.LENGTH_SHORT).show()
         }
 
@@ -396,7 +443,6 @@ class TextNoteActivity : AppCompatActivity() {
             Log.i("TAG","value of description is $content")
             Log.i("TAG","value of color while updating is $noteColor")
         }
-        finish()
     }
 
 }

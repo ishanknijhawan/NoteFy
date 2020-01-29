@@ -27,9 +27,6 @@
             app:layout_constraintHorizontal_bias="0.041"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
             app:layout_constraintVertical_bias="0.555"
             app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
 
@@ -39,21 +36,15 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
             app:layout_constraintHorizontal_bias="0.722"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_pushpin" />
+            app:srcCompat="@drawable/ic_push_pin_final" />
 
         <ImageView
             android:id="@+id/iv_reminder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.843"
@@ -64,16 +55,13 @@
         <ImageView
             android:id="@+id/iv_archive"
             android:layout_width="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.958"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_archive_gray_24dp" />
+            app:srcCompat="@drawable/ic_archive_black_24dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -144,9 +132,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.041"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.357" />
@@ -170,9 +155,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/ic_menu"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.958"

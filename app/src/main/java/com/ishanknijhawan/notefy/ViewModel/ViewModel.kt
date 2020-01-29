@@ -3,7 +3,6 @@ package com.ishanknijhawan.notefy.ViewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import com.ishanknijhawan.notefy.Entity.Note
 import com.ishanknijhawan.notefy.Repository.Repository
 
@@ -28,5 +27,13 @@ class ViewModel(app: Application): AndroidViewModel(app) {
 
     fun getAllNotes(): LiveData<List<Note>> {
         return repository.getAllNotes()
+    }
+
+    fun getArchivedNotes(): LiveData<List<Note>> {
+        return repository.getArchivedNotes()
+    }
+
+    fun getDeletedNotes(): LiveData<List<Note>> {
+        return repository.getDeletedNotes()
     }
 }

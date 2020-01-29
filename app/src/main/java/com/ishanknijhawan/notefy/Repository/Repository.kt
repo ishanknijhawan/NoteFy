@@ -38,6 +38,18 @@ class Repository(app: Application) {
         ).execute().get()
     }
 
+    fun getArchivedNotes(): LiveData<List<Note>> {
+        return getArchivedNotesAsync(
+            noteDao
+        ).execute().get()
+    }
+
+    fun getDeletedNotes(): LiveData<List<Note>> {
+        return getDeletedNotesAsync(
+            noteDao
+        ).execute().get()
+    }
+
     class insertAsync(noteDao: NoteDao?): AsyncTask<Note, Void, Long?>(){
         var noteDao = noteDao
         override fun doInBackground(vararg params: Note): Long? {
@@ -75,6 +87,23 @@ class Repository(app: Application) {
         var noteDao = noteDao
         override fun doInBackground(vararg params: Unit?): LiveData<List<Note>>? {
             return noteDao?.getAllNotes()
+        }
+    }
+
+    //background operation to get all nots
+    class getArchivedNotesAsync(noteDao: NoteDao?):AsyncTask<Unit,Void,LiveData<List<Note>>>(){
+
+        var noteDao = noteDao
+        override fun doInBackground(vararg params: Unit?): LiveData<List<Note>>? {
+            return noteDao?.getArchivedNotes()
+        }
+    }
+
+    class getDeletedNotesAsync(noteDao: NoteDao?):AsyncTask<Unit,Void,LiveData<List<Note>>>(){
+
+        var noteDao = noteDao
+        override fun doInBackground(vararg params: Unit?): LiveData<List<Note>>? {
+            return noteDao?.getDeletedNotes()
         }
     }
 
