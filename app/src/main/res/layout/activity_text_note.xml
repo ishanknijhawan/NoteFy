@@ -50,7 +50,7 @@
             app:layout_constraintHorizontal_bias="0.843"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_set_alarm" />
+            app:srcCompat="@drawable/ic_add_reminder" />
 
         <ImageView
             android:id="@+id/iv_archive"
@@ -198,7 +198,7 @@
                 android:textSize="16dp"
                 android:textColor="#222222"
                 android:layout_marginLeft="5dp"
-                android:drawableLeft="@drawable/ic_picture"
+                android:drawableLeft="@drawable/ic_photo"
                 android:padding="4dp"
                 android:drawablePadding="30dp"
                 android:layout_marginTop="15dp"
@@ -209,7 +209,7 @@
                 android:text="Drawing"
                 android:textSize="16dp"
                 android:layout_marginLeft="5dp"
-                android:drawableLeft="@drawable/ic_paint_brush"
+                android:drawableLeft="@drawable/ic_brush"
                 android:padding="4dp"
                 android:textColor="#222222"
                 android:drawablePadding="30dp"
@@ -300,19 +300,6 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:text="Colors"
-                android:id="@+id/bs_colours"
-                android:textSize="16dp"
-                android:textColor="#222222"
-                android:layout_marginLeft="5dp"
-                android:drawableLeft="@drawable/ic_palette"
-                android:padding="4dp"
-                android:drawablePadding="30dp"
-                android:layout_marginTop="15dp"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:layout_width="match_parent"
                 android:text="Labels"
                 android:id="@+id/bs_labels"
                 android:textSize="16dp"
@@ -322,7 +309,19 @@
                 android:textColor="#222222"
                 android:drawablePadding="30dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Colors"
+                android:id="@+id/bs_colours"
+                android:textSize="16dp"
+                android:textColor="#222222"
+                android:layout_marginLeft="5dp"
+                android:drawableLeft="@drawable/ic_palette"
+                android:padding="4dp"
+                android:drawablePadding="30dp"
+                android:layout_marginTop="15dp"
                 android:layout_height="wrap_content"/>
 
 

@@ -59,6 +59,14 @@ class TextNoteActivity : AppCompatActivity() {
         val rq1 = intent.getStringExtra("REQUEST_CODE")
 
         if (rq1 == "poochi") {
+            val arc = intent.getStringExtra("ARC")
+            bigArchive = arc == "true"
+
+            val bool = intent.getStringExtra("BOOL")
+            bigBookmark = bool == "true"
+        }
+
+        if (rq1 == "poochi") {
             val bool = intent.getStringExtra("BOOL")
             if (bool == "true"){
                 iv_pin.setImageResource(android.R.color.transparent)
@@ -198,11 +206,27 @@ class TextNoteActivity : AppCompatActivity() {
         }
 
         iv_archive.setOnClickListener {
-            Snackbar.make(it, "Added to archive", Snackbar.LENGTH_LONG)
-                .setActionTextColor(Color.parseColor("#FFA500"))
-                .setAction("Undo")
-                { Toast.makeText(this@TextNoteActivity,"clicked undo",Toast.LENGTH_SHORT).show() }
-                .show()
+
+            if (iv_archive.background.constantState == resources.getDrawable(R.drawable.ic_archive_black_24dp).constantState){
+                iv_archive.setBackgroundResource(R.drawable.ic_unarchive_black_24dp)
+                bigArchive = true
+                Toast.makeText(this,"Note added to archive",Toast.LENGTH_SHORT).show()
+                updateNote()
+            }
+            else if(iv_archive.background.constantState == resources.getDrawable(R.drawable.ic_unarchive_black_24dp).constantState) {
+                iv_pin.setBackgroundResource(R.drawable.ic_archive_black_24dp)
+                bigArchive = false
+                Toast.makeText(this,"Note removed from archive",Toast.LENGTH_SHORT).show()
+                updateNote()
+            }
+
+            finish()
+
+//            Snackbar.make(it, "Added to archive", Snackbar.LENGTH_LONG)
+//                .setActionTextColor(Color.parseColor("#FFA500"))
+//                .setAction("Undo")
+//                { Toast.makeText(this@TextNoteActivity,"clicked undo",Toast.LENGTH_SHORT).show() }
+//                .show()
         }
 
         iv_pin.setOnClickListener {
@@ -412,11 +436,6 @@ class TextNoteActivity : AppCompatActivity() {
 
     private fun updateNote() {
         val rq = intent.getStringExtra("REQUEST_CODE")
-
-        if (rq == "poochi") {
-            val arc = intent.getStringExtra("ARC")
-            bigArchive = arc == "true"
-        }
 
         val finalTitle = titleNote.text.toString()
         val content = contentNote.text.toString()

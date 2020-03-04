@@ -22,7 +22,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:id="@+id/rv_main_list"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="50dp"
             android:padding="4dp"
             android:layout_height="match_parent" />
 
@@ -32,17 +32,18 @@
             android:layout_margin="2dp"
             app:fabSize="auto"
             android:id="@+id/fabSpeedDial"
-            android:backgroundTint="#FFFFFF"
-            android:src="@drawable/ic_add"
+            android:backgroundTint="#FF9933"
+            android:src="@drawable/ic_edittttt"
             android:elevation="5dp"
             app:layout_anchor="@id/bottom_app_bar"/>
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottom_app_bar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:layout_gravity="bottom"
-            app:backgroundTint="#80FF9933"
+            android:background="@drawable/bottom_app_bar_bg"
+            app:backgroundTint="#80FFFFFF"
             app:fabAlignmentMode="end"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

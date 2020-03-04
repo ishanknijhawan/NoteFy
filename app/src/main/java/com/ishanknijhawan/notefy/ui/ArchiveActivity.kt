@@ -101,7 +101,7 @@ class ArchiveActivity : AppCompatActivity() {
                     note.archive = false
 
                     viewModel.update(allNotes[position])
-                    Snackbar.make(cl_archive, "Note unarchived", Snackbar.LENGTH_LONG)
+                    Snackbar.make(cl_archive, "Note removed from archive", Snackbar.LENGTH_LONG)
                         .setActionTextColor(Color.parseColor("#FFA500"))
                         .setAction("Undo")
                         {
