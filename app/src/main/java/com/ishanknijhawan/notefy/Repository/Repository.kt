@@ -38,6 +38,12 @@ class Repository(app: Application) {
         ).execute().get()
     }
 
+    fun getPinnedNotes(): LiveData<List<Note>> {
+        return getPinnedNotesAsync(
+            noteDao
+        ).execute().get()
+    }
+
     fun getArchivedNotes(): LiveData<List<Note>> {
         return getArchivedNotesAsync(
             noteDao
@@ -87,6 +93,14 @@ class Repository(app: Application) {
         var noteDao = noteDao
         override fun doInBackground(vararg params: Unit?): LiveData<List<Note>>? {
             return noteDao?.getAllNotes()
+        }
+    }
+
+    class getPinnedNotesAsync(noteDao: NoteDao?):AsyncTask<Unit,Void,LiveData<List<Note>>>(){
+
+        var noteDao = noteDao
+        override fun doInBackground(vararg params: Unit?): LiveData<List<Note>>? {
+            return noteDao?.getPinnedNotes()
         }
     }
 

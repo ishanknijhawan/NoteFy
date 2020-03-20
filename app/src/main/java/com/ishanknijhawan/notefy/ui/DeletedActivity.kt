@@ -49,27 +49,9 @@ class DeletedActivity : AppCompatActivity() {
 
         })
 
-//        val postListner = object : ValueEventListener {
-//
-//            override fun onCancelled(p0: DatabaseError) {
-//            }
-//
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                viewModel.deleteAllNotes()
-//                dataSnapshot.children.forEach {
-//                    val id = it.child("id").value.toString()
-//                    val color = it.child("color").value.toString()
-//                    val description = it.child("description").value.toString()
-//                    val title = it.child("title").value.toString()
-//                    val label = it.child("label").value.toString()
-//                    val bookmark: Boolean = it.child("title").value
-//                    val archive = it.child("label").value.toString()
-//                    val note = Note(id.toLong(), title, description,label, color.toInt())
-//                    viewModel.insert(note)
-//                }
-//            }
-//        }
-//        databaseReference.addValueEventListener(postListner)
+        ivHamburger2.setOnClickListener {
+            finish()
+        }
 
         toolbar2.setOnMenuItemClickListener { arg0 ->
             when (arg0.itemId) {

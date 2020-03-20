@@ -29,6 +29,10 @@ class ViewModel(app: Application): AndroidViewModel(app) {
         return repository.getAllNotes()
     }
 
+    fun getPinnedNotes(): LiveData<List<Note>> {
+        return repository.getPinnedNotes()
+    }
+
     fun getArchivedNotes(): LiveData<List<Note>> {
         return repository.getArchivedNotes()
     }

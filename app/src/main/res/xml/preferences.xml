@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--    <Preference-->
+<!--        android:layout="@layout/item_note_layout"/>-->
 
     <PreferenceCategory android:title="DISPLAY OPTIONS">
         <SwitchPreference
@@ -46,14 +50,7 @@
             android:icon="@drawable/ic_fingerprint_pink"
             android:title="Enable Fingerprint lock"/>
 
-        <Preference
-            android:icon="@drawable/ic_turn_off"
-            android:title="Log out from NoteFy">
-            <intent
-                android:action="com.chikeandroid.settingsscreendemo.SETTING_START_ACTIVITY"
-                android:targetClass="com.ishanknijhawan.notefy.ui.LoginActivity"
-                android:targetPackage="com.ishanknijhawan.notefy.ui" />
-        </Preference>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

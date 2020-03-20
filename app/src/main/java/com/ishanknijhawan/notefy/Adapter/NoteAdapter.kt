@@ -6,21 +6,16 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.util.Log
-import android.view.ActionMode
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
-import com.ishanknijhawan.notefy.Db.NoteDatabase
 import com.ishanknijhawan.notefy.Entity.Note
 import com.ishanknijhawan.notefy.R
-import com.ishanknijhawan.notefy.ui.MainActivity
 import com.ishanknijhawan.notefy.ui.TextNoteActivity
 import kotlinx.android.synthetic.main.activity_text_note.view.*
 import kotlinx.android.synthetic.main.item_note_layout.view.*
-import org.jetbrains.anko.backgroundColor
 
 
 class NoteAdapter(var items: List<Note>, val context: Context)
@@ -61,13 +56,13 @@ class NoteAdapter(var items: List<Note>, val context: Context)
             holder.itemView.setOnClickListener {
                 //Toast.makeText(context,"Clicked",Toast.LENGTH_SHORT).show()
                 val intent = Intent(context,TextNoteActivity::class.java)
-                intent.putExtra("REQUEST_CODE","poochi")
+                intent.putExtra("REQUEST_CODE","opened_from_main_activity")
                 intent.putExtra("INTENT_TITLE",holder.tvTitleView.text.toString())
                 intent.putExtra("INTENT_NOTE",holder.tvNoteView.text.toString())
                 intent.putExtra("INTENT_NOTE_ID",items[position].id)
                 intent.putExtra("INTENT_COLOR",items[position].color)
 
-                if (items[position].bookmark)
+                if (items[position].pinned)
                     intent.putExtra("BOOL","true")
                 else
                     intent.putExtra("BOOL","false")
@@ -80,7 +75,7 @@ class NoteAdapter(var items: List<Note>, val context: Context)
                 Log.i("QWE","value of title in Adapter is ${holder.tvTitleView.text}")
                 Log.i("QWE","value of note in Adapter is ${holder.tvNoteView.text}")
                 Log.i("QWE","value of color in Adapter is ${items[position].color}")
-                Log.i("QWE","value of bookmark is ${items[position].bookmark}")
+                Log.i("QWE","value of bookmark is ${items[position].pinned}")
                 Log.i("QWE","value of archive is ${items[position].archive}")
 
                 context.startActivity(intent)
@@ -88,7 +83,6 @@ class NoteAdapter(var items: List<Note>, val context: Context)
 
         }
     }
-
 }
 
 class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

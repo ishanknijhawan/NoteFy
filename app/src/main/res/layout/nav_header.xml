@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#FAFAFA"
+    android:gravity="bottom"
+    android:padding="16dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/iv_name"
+        android:paddingTop="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_009_letter_i"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:paddingTop="8dp"
+        android:textSize="20dp"
+        android:id="@+id/tv_goodMorning"
+        android:layout_marginBottom="10dp"
+        android:text="Good Morning, Ishank !"
+        android:textColor="#222"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

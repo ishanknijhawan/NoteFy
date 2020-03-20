@@ -13,7 +13,7 @@ data class Note(
     val title: String,
     val description: String,
     var label: String,
-    var bookmark: Boolean,
+    var pinned: Boolean,
     var deleted: Boolean,
     var archive: Boolean,
     var color: Int = Color.parseColor("#FFFFFF")

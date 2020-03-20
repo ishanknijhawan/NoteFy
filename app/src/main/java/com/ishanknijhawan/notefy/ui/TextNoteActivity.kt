@@ -8,21 +8,22 @@ import android.content.res.ColorStateList
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.Scroller
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.snackbar.Snackbar
 import com.ishanknijhawan.notefy.Entity.Note
 import com.ishanknijhawan.notefy.R
 import com.ishanknijhawan.notefy.ViewModel.ViewModel
 import kotlinx.android.synthetic.main.activity_text_note.*
-import org.jetbrains.anko.*
+import org.jetbrains.anko.backgroundColor
+import org.jetbrains.anko.hintTextColor
 import petrov.kristiyan.colorpicker.ColorPicker
 import petrov.kristiyan.colorpicker.ColorPicker.OnFastChooseColorListener
 import java.util.*
@@ -35,7 +36,7 @@ class TextNoteActivity : AppCompatActivity() {
         lateinit var viewModel: ViewModel
 
         var bigArchive: Boolean = false
-        var bigBookmark: Boolean = false
+        var kingPin: Boolean = false
         var bigDelete: Boolean = false
 
         var noteColor: Int = 0
@@ -58,15 +59,15 @@ class TextNoteActivity : AppCompatActivity() {
 
         val rq1 = intent.getStringExtra("REQUEST_CODE")
 
-        if (rq1 == "poochi") {
+        if (rq1 == "opened_from_main_activity") {
             val arc = intent.getStringExtra("ARC")
             bigArchive = arc == "true"
 
             val bool = intent.getStringExtra("BOOL")
-            bigBookmark = bool == "true"
+            kingPin = bool == "true"
         }
 
-        if (rq1 == "poochi") {
+        if (rq1 == "opened_from_main_activity") {
             val bool = intent.getStringExtra("BOOL")
             if (bool == "true"){
                 iv_pin.setImageResource(android.R.color.transparent)
@@ -196,7 +197,7 @@ class TextNoteActivity : AppCompatActivity() {
         contentNote = findViewById(R.id.et_note_content)
 
         iv_back.setOnClickListener {
-            if (rq == "poochi"){
+            if (rq == "opened_from_main_activity"){
                 updateNote()
             }
             else {
@@ -207,43 +208,97 @@ class TextNoteActivity : AppCompatActivity() {
 
         iv_archive.setOnClickListener {
 
-            if (iv_archive.background.constantState == resources.getDrawable(R.drawable.ic_archive_black_24dp).constantState){
-                iv_archive.setBackgroundResource(R.drawable.ic_unarchive_black_24dp)
-                bigArchive = true
-                Toast.makeText(this,"Note added to archive",Toast.LENGTH_SHORT).show()
-                updateNote()
-            }
-            else if(iv_archive.background.constantState == resources.getDrawable(R.drawable.ic_unarchive_black_24dp).constantState) {
-                iv_pin.setBackgroundResource(R.drawable.ic_archive_black_24dp)
-                bigArchive = false
-                Toast.makeText(this,"Note removed from archive",Toast.LENGTH_SHORT).show()
-                updateNote()
+            when {
+                !bigArchive -> {
+                    iv_archive.setBackgroundResource(R.drawable.ic_unarchive_black_24dp)
+                    bigArchive = true
+                    Toast.makeText(this,"Note Archived",Toast.LENGTH_SHORT).show()
+                    updateNote()
+                }
+                kingPin -> {
+                    iv_archive.setBackgroundResource(R.drawable.ic_unarchive_black_24dp)
+                    bigArchive = true
+                    Toast.makeText(this,"Note unpinned and Archived",Toast.LENGTH_SHORT).show()
+                    updateNote()
+                }
+                else -> {
+                    iv_archive.setBackgroundResource(R.drawable.ic_archive_black_24dp)
+                    bigArchive = false
+                    Toast.makeText(this,"Note Unarchived",Toast.LENGTH_SHORT).show()
+                    updateNote()
+                }
             }
 
             finish()
+        }
 
-//            Snackbar.make(it, "Added to archive", Snackbar.LENGTH_LONG)
-//                .setActionTextColor(Color.parseColor("#FFA500"))
-//                .setAction("Undo")
-//                { Toast.makeText(this@TextNoteActivity,"clicked undo",Toast.LENGTH_SHORT).show() }
-//                .show()
+        bs_delete.setOnClickListener {
+            bigDelete = true
+
+            when {
+                bigArchive -> {
+                    bigArchive = false
+                    Toast.makeText(this,"Note unarchived and Trashed",Toast.LENGTH_SHORT).show()
+                }
+                kingPin -> {
+                    kingPin = false
+                    Toast.makeText(this,"Note unpinned and Trashed",Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    Toast.makeText(this,"Note moved to bin",Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            val rq = intent.getStringExtra("REQUEST_CODE")
+            if (rq == "opened_from_main_activity"){
+                updateNote()
+            }
+            else {
+                saveNote()
+            }
+            finish()
         }
 
         iv_pin.setOnClickListener {
-            if (iv_pin.background.constantState == resources.getDrawable(R.drawable.ic_push_pin_final).constantState){
-                iv_pin.setBackgroundResource(R.drawable.ic_push_pin_black_final)
-                bigBookmark = true
-                updateNote()
+
+            when {
+                !kingPin && !bigArchive -> {
+                    iv_pin.setBackgroundResource(R.drawable.ic_push_pin_black_final)
+                    kingPin = true
+                    Toast.makeText(this,"Note Pinned",Toast.LENGTH_SHORT).show()
+                    updateNote()
+                }
+                bigArchive -> {
+                    iv_archive.setBackgroundResource(R.drawable.ic_archive_black_24dp)
+                    iv_pin.setBackgroundResource(R.drawable.ic_push_pin_black_final)
+                    kingPin = true
+                    bigArchive = false
+                    Toast.makeText(this,"Note unarchived and Pinned",Toast.LENGTH_SHORT).show()
+                    updateNote()
+                    finish()
+                }
+                else -> {
+                    iv_pin.setBackgroundResource(R.drawable.ic_push_pin_final)
+                    kingPin = false
+                    //Toast.makeText(this,"Note unpinned",Toast.LENGTH_SHORT).show()
+                    updateNote()
+                }
             }
-            else if(iv_pin.background.constantState == resources.getDrawable(R.drawable.ic_push_pin_black_final).constantState) {
-                iv_pin.setBackgroundResource(R.drawable.ic_push_pin_final)
-                bigBookmark = false
-                updateNote()
-            }
+
+//            if (iv_pin.background.constantState == resources.getDrawable(R.drawable.ic_push_pin_final).constantState){
+//                iv_pin.setBackgroundResource(R.drawable.ic_push_pin_black_final)
+//                kingPin = true
+//                updateNote()
+//            }
+//            else if(iv_pin.background.constantState == resources.getDrawable(R.drawable.ic_push_pin_black_final).constantState) {
+//                iv_pin.setBackgroundResource(R.drawable.ic_push_pin_final)
+//                kingPin = false
+//                updateNote()
+//            }
 
         }
 
-        if (rq == "poochi"){
+        if (rq == "opened_from_main_activity"){
             val title = intent.getStringExtra("INTENT_TITLE")
             val description = intent.getStringExtra("INTENT_NOTE")
             finalColor = intent.getIntExtra("INTENT_COLOR",-1)
@@ -394,7 +449,7 @@ class TextNoteActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         val rq = intent.getStringExtra("REQUEST_CODE")
-        if (rq == "poochi"){
+        if (rq == "opened_from_main_activity"){
             updateNote()
         }
         else {
@@ -422,7 +477,7 @@ class TextNoteActivity : AppCompatActivity() {
                     description = content,
                     archive = bigArchive,
                     label = "home",
-                    bookmark = bigBookmark,
+                    pinned = kingPin,
                     deleted = bigDelete,
                     color = finalColor)
             )
@@ -444,7 +499,7 @@ class TextNoteActivity : AppCompatActivity() {
             description = content,
             archive = bigArchive,
             label = "home",
-            bookmark = bigBookmark,
+            pinned = kingPin,
             deleted = bigDelete,
             color = finalColor)
 

@@ -84,13 +84,14 @@
             android:layout_marginRight="8dp"
             android:layout_height="wrap_content"/>
 
+
         <EditText
             android:layout_width="match_parent"
             android:layout_marginLeft="8dp"
             android:padding="8dp"
             android:background="@drawable/simple_white_background"
             android:hint="Note"
-            android:textSize="17dp"
+            android:textSize="16dp"
             android:textColorHint="#B2B2B2"
             android:textColor="#383838"
             android:id="@+id/et_note_content"
@@ -265,6 +266,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:text="Delete"
+                android:id="@+id/bs_delete"
                 android:textSize="16dp"
                 android:textColor="#222222"
                 android:layout_marginLeft="5dp"
@@ -279,6 +281,7 @@
                 android:text="Send"
                 android:textSize="16dp"
                 android:layout_marginLeft="5dp"
+                android:id="@+id/bs_share"
                 android:drawableLeft="@drawable/ic_share_black_24dp"
                 android:padding="4dp"
                 android:textColor="#222222"
@@ -289,6 +292,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:text="Add location"
+                android:id="@+id/bs_location"
                 android:textSize="16dp"
                 android:layout_marginLeft="5dp"
                 android:drawableLeft="@drawable/ic_location_on_black_final"

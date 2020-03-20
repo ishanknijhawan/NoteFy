@@ -1,32 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
 
-    <group android:id="@+id/menu_top"
+    <group
+        android:id="@+id/first_group"
         android:checkableBehavior="single">
-        <item android:title="Notes"
-            android:icon="@drawable/ic_writing"/>
-        <item android:title="Reminders"
-            android:icon="@drawable/ic_notification"/>
-        <item android:title="Events"
-            android:icon="@drawable/ic_event"/>
+        <item android:id="@+id/nav_notes"
+            android:icon="@drawable/ic_edit"
+            android:title="Notes"/>
+        <item android:id="@+id/nav_reminders"
+            android:icon="@drawable/ic_add_reminder"
+            android:title="Reminders"/>
+        <item android:id="@+id/nav_labels"
+            android:icon="@drawable/ic_tag"
+            android:title="Labels"/>
     </group>
 
-    <group android:id="@+id/menu_middle"
-        android:checkableBehavior="single">
-        <item android:title="Labels"
-            android:icon="@drawable/ic_tag"/>
-        <item android:title="Archived"
-            android:icon="@drawable/ic_archive_black_24dp"/>
+    <group android:checkableBehavior="single"
+        android:id="@+id/second_group">
+            <item android:id="@+id/nav_archive"
+                android:title="Archive"
+                android:icon="@drawable/ic_archive_black_24dp"/>
+            <item android:id="@+id/nav_delete"
+                android:title="Deleted"
+                android:icon="@drawable/ic_delete"/>
     </group>
 
-
-    <group android:id="@+id/menu_bottom"
-        android:checkableBehavior="single">
-        <item android:title="Trash"
-            android:icon="@drawable/ic_delete"/>
-        <item android:title="Settings"
+    <group android:checkableBehavior="single"
+        android:id="@+id/third_group">
+        <item android:id="@+id/nav_settings"
+            android:title="Settings"
             android:icon="@drawable/ic_gear"/>
-
+        <item android:id="@+id/help_and_feedback"
+            android:title="Help &amp; feedback"
+            android:icon="@drawable/ic_information"/>
     </group>
 
 </menu>

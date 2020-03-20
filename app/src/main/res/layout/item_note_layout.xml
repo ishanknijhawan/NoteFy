@@ -9,6 +9,7 @@
         app:strokeWidth="1dp"
         android:layout_margin="4dp"
         android:layout_height="wrap_content"
+        android:maxHeight="220dp"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <LinearLayout
@@ -30,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:id="@+id/tv_note"
                 android:textSize="15dp"
+                android:maxLines="12"
                 android:text="Note"
                 android:layout_marginTop="5dp"
                 android:layout_height="wrap_content"/>

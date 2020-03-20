@@ -19,13 +19,16 @@ interface NoteDao {
     @Query("DELETE FROM note_table WHERE deleted=1")
     fun deleteAll()
 
-    @Query("SELECT * FROM note_table WHERE archive=0 AND bookmark=0 AND deleted=0 ORDER BY id DESC")
+    @Query("SELECT * FROM note_table WHERE archive=0 AND pinned=0 AND deleted=0 ORDER BY id DESC")
     fun getAllNotes(): LiveData<List<Note>>
 
-    @Query("SELECT * FROM note_table WHERE archive=1 AND bookmark=0 AND deleted=0 ORDER BY id DESC")
+    @Query("SELECT * FROM note_table WHERE archive=0 AND pinned=1 AND deleted=0 ORDER BY id DESC")
+    fun getPinnedNotes(): LiveData<List<Note>>
+
+    @Query("SELECT * FROM note_table WHERE archive=1 AND pinned=0 AND deleted=0 ORDER BY id DESC")
     fun getArchivedNotes(): LiveData<List<Note>>
 
-    @Query("SELECT * FROM note_table WHERE archive=0 AND bookmark=0 AND deleted=1 ORDER BY id DESC")
+    @Query("SELECT * FROM note_table WHERE archive=0 AND pinned=0 AND deleted=1 ORDER BY id DESC")
     fun getDeletedNotes(): LiveData<List<Note>>
 
 }
