@@ -15,52 +15,69 @@
         android:layout_width="match_parent"
         android:background="#FFFFFF"
         android:id="@+id/cl_textNote"
-        android:layout_height="55dp">
+        android:padding="8dp"
+        android:layout_height="wrap_content">
 
 
-        <ImageView
+        <ImageButton
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.041"
+            app:layout_constraintHorizontal_bias="0.005"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.555"
             app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/iv_pin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.722"
+            app:layout_constraintHorizontal_bias="0.742"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.571"
             app:srcCompat="@drawable/ic_push_pin_final" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/iv_reminder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:paddingStart="6dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.843"
+            app:layout_constraintHorizontal_bias="0.867"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_add_reminder" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/iv_archive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.958"
+            app:layout_constraintHorizontal_bias="0.983"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.583"
             app:srcCompat="@drawable/ic_archive_black_24dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -118,24 +135,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
-        android:padding="8dp"
+        android:padding="4dp"
         android:id="@+id/ll_toolbar1"
         android:background="#FFFFFF"
         android:orientation="horizontal"
-        android:layout_height="50dp">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/addMenu"
+        <ImageButton
+            android:id="@+id/menu_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_gravity="center"
-            android:src="@drawable/ic_add_square_button"
+            android:layout_marginEnd="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:paddingStart="12dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="11dp"
+            android:paddingBottom="12dp"
+            android:src="@drawable/ic_menu"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.041"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.357" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/textView"
@@ -145,23 +167,29 @@
             android:text="Edited 4:06 PM"
             android:textColor="#222222"
             android:textSize="12dp"
+            app:layout_anchor="@+id/ll_toolbar1"
+            app:layout_anchorGravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/menu_menu"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/addMenu"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/menu_menu"
+        <ImageButton
+            android:id="@+id/addMenu"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_menu"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.958"
-            app:layout_constraintStart_toStartOf="@+id/addMenu"
+            app:layout_constraintEnd_toEndOf="@+id/menu_menu"
+            app:layout_constraintHorizontal_bias="0.008"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.411" />
+            app:layout_constraintVertical_bias="0.555"
+            app:srcCompat="@drawable/ic_add_square_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -184,62 +212,72 @@
             <TextView
                 android:layout_width="match_parent"
                 android:text="Take photo"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:textSize="16dp"
                 android:textColor="#222222"
                 android:layout_marginLeft="5dp"
                 android:drawableLeft="@drawable/ic_camera_alt"
-                android:padding="4dp"
+                android:padding="10dp"
                 android:drawablePadding="30dp"
-                android:layout_marginTop="15dp"
                 android:layout_height="wrap_content"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:text="Choose image"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:textSize="16dp"
                 android:textColor="#222222"
                 android:layout_marginLeft="5dp"
                 android:drawableLeft="@drawable/ic_photo"
-                android:padding="4dp"
+                android:padding="10dp"
                 android:drawablePadding="30dp"
-                android:layout_marginTop="15dp"
                 android:layout_height="wrap_content"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:text="Drawing"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:textSize="16dp"
                 android:layout_marginLeft="5dp"
                 android:drawableLeft="@drawable/ic_brush"
-                android:padding="4dp"
+                android:padding="10dp"
                 android:textColor="#222222"
                 android:drawablePadding="30dp"
-                android:layout_marginTop="15dp"
                 android:layout_height="wrap_content"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:text="Recording"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:textSize="16dp"
                 android:layout_marginLeft="5dp"
                 android:drawableLeft="@drawable/ic_voice_amplifier_outline"
-                android:padding="4dp"
+                android:padding="10dp"
                 android:textColor="#222222"
                 android:drawablePadding="30dp"
-                android:layout_marginTop="15dp"
                 android:layout_height="wrap_content"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:text="Tick boxes"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:textSize="16dp"
                 android:layout_marginLeft="5dp"
                 android:drawableLeft="@drawable/ic_check_box"
-                android:padding="4dp"
+                android:padding="10dp"
                 android:textColor="#222222"
                 android:drawablePadding="30dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:layout_height="wrap_content"/>
 
 
@@ -263,70 +301,110 @@
             android:id="@+id/ll_bs2"
             android:layout_height="wrap_content">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:text="Delete"
-                android:id="@+id/bs_delete"
-                android:textSize="16dp"
-                android:textColor="#222222"
-                android:layout_marginLeft="5dp"
-                android:drawableLeft="@drawable/ic_delete"
-                android:padding="4dp"
-                android:drawablePadding="30dp"
-                android:layout_marginTop="15dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:text="Send"
-                android:textSize="16dp"
-                android:layout_marginLeft="5dp"
-                android:id="@+id/bs_share"
-                android:drawableLeft="@drawable/ic_share_black_24dp"
-                android:padding="4dp"
-                android:textColor="#222222"
-                android:drawablePadding="30dp"
-                android:layout_marginTop="15dp"
-                android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Delete"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/bs_delete"
+                    android:textSize="16dp"
+                    android:textColor="#222222"
+                    android:layout_marginLeft="5dp"
+                    android:drawableLeft="@drawable/ic_delete"
+                    android:padding="10dp"
+                    android:drawablePadding="30dp"
+                    android:layout_height="wrap_content"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:text="Add location"
-                android:id="@+id/bs_location"
-                android:textSize="16dp"
-                android:layout_marginLeft="5dp"
-                android:drawableLeft="@drawable/ic_location_on_black_final"
-                android:padding="4dp"
-                android:textColor="#222222"
-                android:drawablePadding="30dp"
-                android:layout_marginTop="15dp"
-                android:layout_height="wrap_content"/>
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:text="Labels"
-                android:id="@+id/bs_labels"
-                android:textSize="16dp"
-                android:layout_marginLeft="5dp"
-                android:drawableLeft="@drawable/ic_tag"
-                android:padding="4dp"
-                android:textColor="#222222"
-                android:drawablePadding="30dp"
-                android:layout_marginTop="15dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
 
-            <TextView
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Send"
+                    android:textSize="16dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/bs_share"
+                    android:drawableLeft="@drawable/ic_share_black_24dp"
+                    android:padding="10dp"
+                    android:textColor="#222222"
+                    android:drawablePadding="30dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:text="Colors"
-                android:id="@+id/bs_colours"
-                android:textSize="16dp"
-                android:textColor="#222222"
-                android:layout_marginLeft="5dp"
-                android:drawableLeft="@drawable/ic_palette"
-                android:padding="4dp"
-                android:drawablePadding="30dp"
-                android:layout_marginTop="15dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Add location"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/bs_location"
+                    android:textSize="16dp"
+                    android:layout_marginLeft="5dp"
+                    android:drawableLeft="@drawable/ic_location_on_black_final"
+                    android:padding="10dp"
+                    android:textColor="#222222"
+                    android:drawablePadding="30dp"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Labels"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/bs_labels"
+                    android:textSize="16dp"
+                    android:layout_marginLeft="5dp"
+                    android:drawableLeft="@drawable/ic_tag"
+                    android:padding="10dp"
+                    android:textColor="#222222"
+                    android:drawablePadding="30dp"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="Colour"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/bs_colours"
+                    android:textSize="16dp"
+                    android:textColor="#222222"
+                    android:layout_marginLeft="5dp"
+                    android:drawableLeft="@drawable/ic_palette"
+                    android:padding="10dp"
+                    android:drawablePadding="30dp"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
 
 
         </LinearLayout>

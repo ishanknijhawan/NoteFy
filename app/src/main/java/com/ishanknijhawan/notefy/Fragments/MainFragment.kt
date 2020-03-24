@@ -189,7 +189,7 @@ class MainFragment : Fragment() {
             R.id.draw_note -> {
                 Toast.makeText(this.requireContext(),"draw note", Toast.LENGTH_SHORT).show()
             }
-            R.id.shopping_list -> {
+            R.id.recording -> {
                 val gsoo = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(getString(R.string.default_web_client_id))
                     .requestEmail()

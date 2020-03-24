@@ -1,5 +1,6 @@
 package com.ishanknijhawan.notefy.ui
 
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -50,7 +51,8 @@ class DeletedActivity : AppCompatActivity() {
         })
 
         ivHamburger2.setOnClickListener {
-            finish()
+            val intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
         }
 
         toolbar2.setOnMenuItemClickListener { arg0 ->
@@ -62,6 +64,17 @@ class DeletedActivity : AppCompatActivity() {
             false
         }
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this,MainActivity::class.java)
+        startActivity(intent)
+        super.onBackPressed()
     }
 
 }

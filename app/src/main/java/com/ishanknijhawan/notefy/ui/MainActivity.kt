@@ -45,6 +45,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val goodMorning2 = navigationview.getHeaderView(0)
         val goodMorning = goodMorning2.findViewById<TextView>(R.id.tv_goodMorning)
 
+        val tvEmail = navigationview.getHeaderView(0)
+        val tvEmailFinal = tvEmail.findViewById<TextView>(R.id.tv_email)
+
         val rightNow: Calendar = Calendar.getInstance()
         var username = FirebaseAuth.getInstance().currentUser?.displayName
         val splitName = username?.split(" ")
@@ -62,6 +65,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             in 17..22 -> goodMorning.text = "Good Evening, $finalName"
             else -> goodMorning.text = "Welcome back, $finalName"
         }
+
+        tvEmailFinal.text = FirebaseAuth.getInstance().currentUser?.email
 
         ivHamburger.setOnClickListener {
             drawer.openDrawer(GravityCompat.START)

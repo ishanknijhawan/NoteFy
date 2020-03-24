@@ -24,9 +24,9 @@
         />
 
     <item
-        android:id="@+id/shopping_list"
-        android:icon="@drawable/ic_shopping_cart_final"
-        android:title="Shopping list"
+        android:id="@+id/recording"
+        android:icon="@drawable/ic_voice_amplifier_outline"
+        android:title="Recording"
         app:showAsAction="always"
         />
 

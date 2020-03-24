@@ -71,28 +71,28 @@ class TextNoteActivity : AppCompatActivity() {
             val bool = intent.getStringExtra("BOOL")
             if (bool == "true"){
                 iv_pin.setImageResource(android.R.color.transparent)
-                iv_pin.setBackgroundResource(R.drawable.ic_push_pin_black_final)
+                iv_pin.setImageResource(R.drawable.ic_push_pin_black_final)
             }
             else if(bool == "false"){
                 Log.i("BG","setting this bg")
                 iv_pin.setImageResource(android.R.color.transparent)
-                iv_pin.setBackgroundResource(R.drawable.ic_push_pin_final)
+                iv_pin.setImageResource(R.drawable.ic_push_pin_final)
             }
 
             val arc = intent.getStringExtra("ARC")
             if (arc == "false"){
                 iv_archive.setImageResource(android.R.color.transparent)
-                iv_archive.setBackgroundResource(R.drawable.ic_archive_black_24dp)
+                iv_archive.setImageResource(R.drawable.ic_archive_black_24dp)
             }
             else if (arc == "true"){
                 Log.i("BG","setting this bg")
                 iv_archive.setImageResource(android.R.color.transparent)
-                iv_archive.setBackgroundResource(R.drawable.ic_unarchive_black_24dp)
+                iv_archive.setImageResource(R.drawable.ic_unarchive_black_24dp)
             }
         }
         else {
-            iv_pin.setBackgroundResource(R.drawable.ic_push_pin_final)
-            iv_archive.setBackgroundResource(R.drawable.ic_archive_black_24dp)
+            iv_pin.setImageResource(R.drawable.ic_push_pin_final)
+            iv_archive.setImageResource(R.drawable.ic_archive_black_24dp)
         }
 
         iv_reminder.setOnClickListener {
@@ -210,19 +210,19 @@ class TextNoteActivity : AppCompatActivity() {
 
             when {
                 !bigArchive -> {
-                    iv_archive.setBackgroundResource(R.drawable.ic_unarchive_black_24dp)
+                    iv_archive.setImageResource(R.drawable.ic_unarchive_black_24dp)
                     bigArchive = true
                     Toast.makeText(this,"Note Archived",Toast.LENGTH_SHORT).show()
                     updateNote()
                 }
                 kingPin -> {
-                    iv_archive.setBackgroundResource(R.drawable.ic_unarchive_black_24dp)
+                    iv_archive.setImageResource(R.drawable.ic_unarchive_black_24dp)
                     bigArchive = true
                     Toast.makeText(this,"Note unpinned and Archived",Toast.LENGTH_SHORT).show()
                     updateNote()
                 }
                 else -> {
-                    iv_archive.setBackgroundResource(R.drawable.ic_archive_black_24dp)
+                    iv_archive.setImageResource(R.drawable.ic_archive_black_24dp)
                     bigArchive = false
                     Toast.makeText(this,"Note Unarchived",Toast.LENGTH_SHORT).show()
                     updateNote()
@@ -263,14 +263,14 @@ class TextNoteActivity : AppCompatActivity() {
 
             when {
                 !kingPin && !bigArchive -> {
-                    iv_pin.setBackgroundResource(R.drawable.ic_push_pin_black_final)
+                    iv_pin.setImageResource(R.drawable.ic_push_pin_black_final)
                     kingPin = true
                     Toast.makeText(this,"Note Pinned",Toast.LENGTH_SHORT).show()
                     updateNote()
                 }
                 bigArchive -> {
-                    iv_archive.setBackgroundResource(R.drawable.ic_archive_black_24dp)
-                    iv_pin.setBackgroundResource(R.drawable.ic_push_pin_black_final)
+                    iv_archive.setImageResource(R.drawable.ic_archive_black_24dp)
+                    iv_pin.setImageResource(R.drawable.ic_push_pin_black_final)
                     kingPin = true
                     bigArchive = false
                     Toast.makeText(this,"Note unarchived and Pinned",Toast.LENGTH_SHORT).show()
@@ -278,7 +278,7 @@ class TextNoteActivity : AppCompatActivity() {
                     finish()
                 }
                 else -> {
-                    iv_pin.setBackgroundResource(R.drawable.ic_push_pin_final)
+                    iv_pin.setImageResource(R.drawable.ic_push_pin_final)
                     kingPin = false
                     //Toast.makeText(this,"Note unpinned",Toast.LENGTH_SHORT).show()
                     updateNote()
@@ -286,12 +286,12 @@ class TextNoteActivity : AppCompatActivity() {
             }
 
 //            if (iv_pin.background.constantState == resources.getDrawable(R.drawable.ic_push_pin_final).constantState){
-//                iv_pin.setBackgroundResource(R.drawable.ic_push_pin_black_final)
+//                iv_pin.setImageResource(R.drawable.ic_push_pin_black_final)
 //                kingPin = true
 //                updateNote()
 //            }
 //            else if(iv_pin.background.constantState == resources.getDrawable(R.drawable.ic_push_pin_black_final).constantState) {
-//                iv_pin.setBackgroundResource(R.drawable.ic_push_pin_final)
+//                iv_pin.setImageResource(R.drawable.ic_push_pin_final)
 //                kingPin = false
 //                updateNote()
 //            }

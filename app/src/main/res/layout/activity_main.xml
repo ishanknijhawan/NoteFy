@@ -12,9 +12,6 @@
     tools:context=".ui.MainActivity">
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
@@ -42,20 +39,28 @@
                 android:layout_height="match_parent">
 
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/ivHamburger"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="5dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingBottom="5dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.516"
                     app:srcCompat="@drawable/ic_menuuu_black_24dp" />
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/ivStaggered"
+                    android:padding="5dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -64,6 +69,7 @@
                     app:layout_constraintStart_toStartOf="@+id/ivHamburger"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.483"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     app:srcCompat="@drawable/ic_layout_staggered" />
 
                 <TextView
