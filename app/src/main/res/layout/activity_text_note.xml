@@ -94,6 +94,7 @@
             android:textSize="21dp"
             android:textColor="#000"
             android:autofillHints="Title"
+            android:inputType="text"
             android:hint="Title"
             android:textColorHint="#B2B2B2"
             android:background="@drawable/simple_white_background"
@@ -101,6 +102,53 @@
             android:layout_marginRight="8dp"
             android:layout_height="wrap_content"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="8dp"
+            android:id="@+id/rv_check_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_marginLeft="50dp"
+            android:padding="8dp"
+            android:background="@drawable/simple_white_background"
+            android:hint="+     Add item.."
+            android:textSize="16dp"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:textColorHint="#B2B2B2"
+            android:textColor="#383838"
+            android:id="@+id/et_add_note"
+            android:layout_marginRight="8dp"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/divider"
+            android:background="#B2B2B2"
+            android:layout_height="1dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginLeft="8dp"
+            android:padding="8dp"
+            android:textSize="16dp"
+            android:text="4 ticked items"
+            android:textColorHint="#B2B2B2"
+            android:textColor="#b2b2b2"
+            android:id="@+id/tv_status"
+            android:layout_marginRight="8dp"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="8dp"
+            android:id="@+id/rv_check_list_done"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -267,6 +315,7 @@
 
             <TextView
                 android:layout_width="match_parent"
+                android:id="@+id/bs_tickBoxes"
                 android:text="Tick boxes"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"

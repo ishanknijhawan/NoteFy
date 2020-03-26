@@ -181,7 +181,9 @@ class MainFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.todo -> {
-                Toast.makeText(this.requireContext(),"todo", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this.requireContext(), TextNoteActivity::class.java)
+                intent.putExtra("CHECK_LIST","opened_from_check_list")
+                startActivity(intent)
             }
             R.id.attach_image -> {
                 Toast.makeText(this.requireContext(),"attach image", Toast.LENGTH_SHORT).show()

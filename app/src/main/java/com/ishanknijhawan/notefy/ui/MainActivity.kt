@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationview.setNavigationItemSelectedListener(this)
         navigationview.setItemIconTintList(null)
 
-        window.navigationBarColor = Color.parseColor("#a9a9a9")
-        window.statusBarColor = Color.parseColor("#a9a9a9")
+        window.navigationBarColor = Color.parseColor("#FFFFFF")
+        window.statusBarColor = Color.parseColor("#FFFFFF")
         val goodMorning2 = navigationview.getHeaderView(0)
         val goodMorning = goodMorning2.findViewById<TextView>(R.id.tv_goodMorning)
 

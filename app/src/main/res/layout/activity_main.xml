@@ -31,6 +31,7 @@
             android:layout_width="match_parent"
             app:titleTextColor="#222222"
             android:elevation="8dp"
+            android:background="#00000000"
             android:id="@+id/toolbar2"
             android:layout_height="50dp">
 

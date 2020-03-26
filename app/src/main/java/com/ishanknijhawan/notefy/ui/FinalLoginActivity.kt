@@ -40,6 +40,7 @@ class FinalLoginActivity : AppCompatActivity() {
             .build()
         googleSignInClient = GoogleSignIn.getClient(this,gso)
 
+        sign_in_button.elevation = 0F
         sign_in_button.setOnClickListener {
             signIn()
             //Toast.makeText(this,"working",Toast.LENGTH_SHORT).show()

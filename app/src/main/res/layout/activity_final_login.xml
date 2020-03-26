@@ -10,18 +10,18 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to NoteFy"
-        android:textColor="#FF9933"
-        android:textSize="35dp"
+        android:fontFamily="serif-monospace"
         android:gravity="center"
-        android:fontFamily="casual"
+        android:text="NoteFy"
+        android:textColor="#F5751F"
+        android:textSize="50dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.12" />
+        app:layout_constraintVertical_bias="0.383" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -31,25 +31,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.263"
+        app:layout_constraintVertical_bias="0.171"
         app:srcCompat="@drawable/ic_notes_notes_final" />
 
-    <Button
+    <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
+        android:paddingLeft="60dp"
+        android:paddingRight="60dp"
         android:layout_height="wrap_content"
         android:text="Sign In"
-        android:textColor="#ffffff"
+        android:textColor="#565656"
         android:textSize="20dp"
         android:background="@drawable/white_oval_background"
-        android:backgroundTint="#FF9933"
+        android:backgroundTint="#FAFAFA"
         android:textAllCaps="false"
         android:gravity="center"
-        android:elevation="8dp"
+        android:elevation="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.733" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#565656"
+        android:textSize="15dp"
+        android:text="The ultimate note taking application"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.449" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,8 +9,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.ishanknijhawan.notefy.Entity.Note
 import com.ishanknijhawan.notefy.R
 import com.ishanknijhawan.notefy.ui.TextNoteActivity
@@ -37,7 +41,8 @@ class NoteAdapter(var items: List<Note>, val context: Context)
         holder.tvNoteView.text = items[position].description
         holder.itemNoteLayout.cardElevation = 0F
 
-
+        holder.cardCheckList.layoutManager = LinearLayoutManager(this.context)
+        holder.cardCheckList.adapter = CardListAdapter(items[position].checkList, this.context)
 
         if (items[position].color != -1)
             holder.itemNoteLayout.strokeColor = items[position].color
@@ -48,19 +53,33 @@ class NoteAdapter(var items: List<Note>, val context: Context)
             holder.tvTitleView.visibility = View.GONE
         }
 
+        if (items[position].checkList.size == 0){
+            holder.cardCheckList.visibility = View.GONE
+        }
+
         if (holder.tvNoteView.text.isEmpty()){
             holder.tvNoteView.visibility = View.GONE
         }
 
+
         if (!items[position].deleted){
-            holder.itemView.setOnClickListener {
-                //Toast.makeText(context,"Clicked",Toast.LENGTH_SHORT).show()
+            holder.itemNoteLayout.setOnClickListener {
+
                 val intent = Intent(context,TextNoteActivity::class.java)
                 intent.putExtra("REQUEST_CODE","opened_from_main_activity")
                 intent.putExtra("INTENT_TITLE",holder.tvTitleView.text.toString())
                 intent.putExtra("INTENT_NOTE",holder.tvNoteView.text.toString())
                 intent.putExtra("INTENT_NOTE_ID",items[position].id)
                 intent.putExtra("INTENT_COLOR",items[position].color)
+                intent.putExtra("CARD_SIZE",items[position].checkList.size)
+
+                for(i in 0 until items[position].checkList.size){
+                    intent.putExtra(i.toString(),items[position].checkList[i].inputName)
+                    if (i == 0)
+                        intent.putExtra("FIRST_CHECK",items[position].checkList[i].inputCheck)
+                    else
+                    intent.putExtra((-i).toString(),items[position].checkList[i].inputCheck)
+                }
 
                 if (items[position].pinned)
                     intent.putExtra("BOOL","true")
@@ -72,12 +91,6 @@ class NoteAdapter(var items: List<Note>, val context: Context)
                 else
                     intent.putExtra("ARC","false")
 
-                Log.i("QWE","value of title in Adapter is ${holder.tvTitleView.text}")
-                Log.i("QWE","value of note in Adapter is ${holder.tvNoteView.text}")
-                Log.i("QWE","value of color in Adapter is ${items[position].color}")
-                Log.i("QWE","value of bookmark is ${items[position].pinned}")
-                Log.i("QWE","value of archive is ${items[position].archive}")
-
                 context.startActivity(intent)
             }
 
@@ -86,13 +99,8 @@ class NoteAdapter(var items: List<Note>, val context: Context)
 }
 
 class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-    val tvTitleView =itemView.tv_title
-    val tvNoteView = itemView.tv_note
-    val itemBackground1 = itemView.lll
-    val itemBackground2 = itemView.ll_bs1
-    val itemBackground3 = itemView.ll_bs2
-    val itemBackground4 = itemView.lll
-    val itemBackground5 = itemView.ll_toolbar1
-
-    val itemNoteLayout = itemView.note_layout_cardview
+    val tvTitleView: TextView =itemView.tv_title
+    val tvNoteView:TextView = itemView.tv_note
+    val itemNoteLayout: MaterialCardView = itemView.note_layout_cardview
+    val cardCheckList = itemView.rv_card_list
 }

@@ -7,6 +7,9 @@
         android:id="@+id/note_layout_cardview"
         app:strokeColor="#d3d3d3"
         app:strokeWidth="1dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_margin="4dp"
         android:layout_height="wrap_content"
         android:maxHeight="220dp"
@@ -27,6 +30,13 @@
                 android:textColor="#000"
                 android:layout_height="wrap_content"/>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/rv_card_list"
+                android:layout_height="wrap_content"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:id="@+id/tv_note"
@@ -34,6 +44,7 @@
                 android:maxLines="12"
                 android:text="Note"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>

@@ -16,5 +16,11 @@ data class Note(
     var pinned: Boolean,
     var deleted: Boolean,
     var archive: Boolean,
-    var color: Int = Color.parseColor("#FFFFFF")
+    var color: Int = Color.parseColor("#FFFFFF"),
+    var checkList: MutableList<Inception>
 )
+
+class BooleanHelper(val listList: ArrayList<Inception>)
+class Inception(var inputName: String?, var inputCheck: Boolean)
+
+

@@ -23,10 +23,8 @@ import com.google.firebase.database.DatabaseReference
 import com.ishanknijhawan.notefy.Adapter.NoteAdapter
 import com.ishanknijhawan.notefy.Entity.Note
 import com.ishanknijhawan.notefy.FirebaseDatabase.FireStore
-
 import com.ishanknijhawan.notefy.R
 import com.ishanknijhawan.notefy.ViewModel.ViewModel
-import kotlinx.android.synthetic.main.activity_archive.*
 import kotlinx.android.synthetic.main.fragment_archive.*
 
 
