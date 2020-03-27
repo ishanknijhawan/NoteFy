@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -25,11 +26,15 @@ class CardListAdapter(val items: MutableList<Inception>, val context: Context)
 
     override fun onBindViewHolder(holder: ViewHolder3, position: Int) {
         holder.textView.text = items[position].inputName
-        holder.checkBox.isChecked = items[position].inputCheck
+
+        if (items[position].inputCheck)
+            holder.checkBox.setImageResource(R.drawable.ic_checkbox_card)
+        else
+            holder.checkBox.setImageResource(R.drawable.ic_check_box_empty_card)
+
         holder.checkBox.isEnabled = false
 
-        if (holder.checkBox.isChecked){
-            holder.textView.textColor = Color.parseColor("#696969")
+        if (items[position].inputCheck){
             holder.textView.paintFlags = holder.textView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         }
     }
@@ -37,6 +42,6 @@ class CardListAdapter(val items: MutableList<Inception>, val context: Context)
 }
 
 class ViewHolder3(view: View): RecyclerView.ViewHolder(view) {
-    val checkBox: CheckBox = view.cb_checkbox_card
+    val checkBox: ImageView = view.cb_checkbox_card
     val textView: TextView = view.tv_card_list
 }

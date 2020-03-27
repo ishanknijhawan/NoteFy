@@ -12,7 +12,7 @@
     <CheckBox
         android:id="@+id/cb_checkbox"
         android:layout_width="wrap_content"
-        android:buttonTint="#696969"
+        android:buttonTint="#000000"
         android:padding="6dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,7 +30,7 @@
         android:padding="6dp"
         android:imeOptions="actionDone"
         android:inputType="text"
-        android:textColor="#383838"
+        android:textColor="#000000"
         android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

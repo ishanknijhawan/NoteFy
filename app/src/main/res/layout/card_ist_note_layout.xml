@@ -8,19 +8,18 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-        <CheckBox
+        <ImageView
             android:id="@+id/cb_checkbox_card"
-            android:scaleX="0.7"
-            android:scaleY="0.7"
-            android:layout_gravity="start"
-            android:buttonTint="#696969"
-            android:layout_marginRight="5dp"
-            android:layout_width="27dp"
-            android:layout_height="25dp"/>
+            android:src="@drawable/ic_checkbox_card"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:text="Hello"
-            android:textSize="14dp"
+            android:textColor="#000000"
+            android:textSize="16dp"
             android:layout_gravity="center"
             android:id="@+id/tv_card_list"
             android:layout_width="match_parent"

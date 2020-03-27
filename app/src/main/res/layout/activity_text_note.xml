@@ -102,8 +102,21 @@
             android:layout_marginRight="8dp"
             android:layout_height="wrap_content"/>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <ImageView
+            android:id="@+id/ivAddTNA"
+            android:layout_gravity="center"
             android:layout_marginTop="8dp"
+            android:padding="10dp"
+            android:scaleType="centerCrop"
+            android:clickable="false"
+            android:focusable="false"
+            android:elevation="16dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="12dp"
             android:id="@+id/rv_check_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -111,7 +124,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_marginLeft="50dp"
-            android:padding="8dp"
+            android:padding="12dp"
             android:background="@drawable/simple_white_background"
             android:hint="+     Add item.."
             android:textSize="16dp"
@@ -158,9 +171,16 @@
             android:hint="Note"
             android:textSize="16dp"
             android:textColorHint="#B2B2B2"
-            android:textColor="#383838"
+            android:textColor="#000000"
             android:id="@+id/et_note_content"
             android:layout_marginRight="8dp"
+            android:layout_height="wrap_content"/>
+
+        <io.github.ponnamkarthik.richlinkpreview.RichLinkView
+            android:id="@+id/richLinkView"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.chip.Chip
@@ -260,6 +280,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:text="Take photo"
+                android:id="@+id/bs_camera"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
@@ -274,6 +295,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:text="Choose image"
+                android:id="@+id/bs_choose_file"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
@@ -293,6 +315,7 @@
                 android:focusable="true"
                 android:textSize="16dp"
                 android:layout_marginLeft="5dp"
+                android:id="@+id/bs_draw"
                 android:drawableLeft="@drawable/ic_brush"
                 android:padding="10dp"
                 android:textColor="#222222"

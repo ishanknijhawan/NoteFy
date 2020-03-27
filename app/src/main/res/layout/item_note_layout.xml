@@ -19,14 +19,34 @@
             android:layout_width="match_parent"
             android:id="@+id/ll_linearlayout_note"
             android:orientation="vertical"
-            android:padding="14dp"
             android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/addImage"
+                android:src="@mipmap/ic_launcher"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"/>
+
+            <io.github.ponnamkarthik.richlinkpreview.RichLinkView
+                android:id="@+id/richLinkViewCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/ll_linearlayout_note2"
+                android:orientation="vertical"
+                android:padding="14dp"
+                android:layout_height="match_parent">
 
             <TextView
                 android:layout_width="match_parent"
                 android:id="@+id/tv_title"
-                android:textSize="17dp"
+                android:textSize="19dp"
                 android:text="Title"
+                android:fontFamily="sans-serif-light"
+                android:textStyle="bold"
                 android:textColor="#000"
                 android:layout_height="wrap_content"/>
 
@@ -43,12 +63,15 @@
                 android:textSize="15dp"
                 android:maxLines="12"
                 android:text="Note"
+                android:textColor="#2a2a2a"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
+        </LinearLayout>
 
 
 
-    </com.google.android.material.card.MaterialCardView>
+
+</com.google.android.material.card.MaterialCardView>

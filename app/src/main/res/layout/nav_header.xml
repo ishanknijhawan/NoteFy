@@ -36,7 +36,7 @@
         android:id="@+id/tv_email"
         android:layout_marginBottom="10dp"
         android:text="ishanknijhawan@gmail.com"
-        android:textColor="#565656"
+        android:textColor="#000000"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:layout_height="wrap_content"/>
 

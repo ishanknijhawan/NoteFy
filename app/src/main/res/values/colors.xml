@@ -2,20 +2,20 @@
 <resources>
     <color name="colorGreen">#00E600</color>
     <color name="colorRed">#FF0000</color>
-    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimary">#fafafa</color>
     <color name="colorPrimaryDark">#a9a9a9</color>
     <color name="colorAccent">#FF9933</color>
-    <color name="bright_pink">#f28b82</color>
+    <color name="bright_pink">#f07b70</color>
     <color name="red">#fbbc04</color>
-    <color name="orange">#fff475</color>
-    <color name="yellow">#aecbfa</color>
-    <color name="chartreuse">#cbf0f8</color>
-    <color name="green">#a7ffeb</color>
-    <color name="spring_green">#ccff90</color>
-    <color name="cyan">#d7aefb</color>
-    <color name="azure">#fdcfe8</color>
-    <color name="blue">#e6c9a8</color>
-    <color name="magenta">#e8eaed</color>
+    <color name="orange">#fff14e</color>
+    <color name="yellow">#9cbff9</color>
+    <color name="chartreuse">#a8e6f3</color>
+    <color name="green">#93ffe7</color>
+    <color name="spring_green">#baff69</color>
+    <color name="cyan">#ce9fba</color>
+    <color name="azure">#fcbcdf</color>
+    <color name="blue">#e2c099</color>
+    <color name="magenta">#d2d6dc</color>
 
     <array name="rainbow">
         <item>@color/colorPrimary</item>

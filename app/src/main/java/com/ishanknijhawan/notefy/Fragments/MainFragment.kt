@@ -1,12 +1,14 @@
 package com.ishanknijhawan.notefy.Fragments
 
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.*
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.divyanshu.draw.activity.DrawingActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomappbar.BottomAppBar
@@ -51,6 +54,8 @@ class MainFragment : Fragment() {
     lateinit var noteAdapter: NoteAdapter
     lateinit var prefs: SharedPreferences
     lateinit var databaseReference: DatabaseReference
+    lateinit var dialog: AlertDialog
+    lateinit var dialogView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,6 +73,26 @@ class MainFragment : Fragment() {
 
         val user = FirebaseAuth.getInstance().currentUser?.uid
         databaseReference = FireStore.getDatabase(user.toString())!!
+
+        dialog = AlertDialog.Builder(this.requireContext()).create()
+        dialogView = layoutInflater.inflate(R.layout.layout_dialog,null)
+
+        val tvAddCamera = dialogView.findViewById<TextView>(R.id.tvOpenCamera)
+        val tvChooseFile = dialogView.findViewById<TextView>(R.id.tvChooseFile)
+
+        tvAddCamera.setOnClickListener {
+            val intent = Intent(this.requireContext(), TextNoteActivity::class.java)
+            intent.putExtra("IMAGE_CAMERA","opened_from_camera")
+            startActivity(intent)
+            dialog.dismiss()
+        }
+
+        tvChooseFile.setOnClickListener {
+            val intent = Intent(this.requireContext(), TextNoteActivity::class.java)
+            intent.putExtra("IMAGE_FILE","opened_from_file")
+            startActivity(intent)
+            dialog.dismiss()
+        }
 
         val helper by lazy {
 
@@ -186,10 +211,14 @@ class MainFragment : Fragment() {
                 startActivity(intent)
             }
             R.id.attach_image -> {
-                Toast.makeText(this.requireContext(),"attach image", Toast.LENGTH_SHORT).show()
+                dialog.setView(dialogView)
+                dialog.setCancelable(true)
+                dialog.show()
             }
             R.id.draw_note -> {
-                Toast.makeText(this.requireContext(),"draw note", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this.requireContext(), TextNoteActivity::class.java)
+                intent.putExtra("DRAW","opened_from_drawing")
+                startActivity(intent)
             }
             R.id.recording -> {
                 val gsoo = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -214,7 +243,4 @@ class MainFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-
-
 }

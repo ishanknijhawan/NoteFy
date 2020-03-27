@@ -1,37 +1,49 @@
 package com.ishanknijhawan.notefy.ui
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
+import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.TypedArray
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.divyanshu.draw.activity.DrawingActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.ishanknijhawan.notefy.Adapter.CheckListAdapter
-import com.ishanknijhawan.notefy.Entity.BooleanHelper
 import com.ishanknijhawan.notefy.Entity.Inception
 import com.ishanknijhawan.notefy.Entity.Note
 import com.ishanknijhawan.notefy.R
 import com.ishanknijhawan.notefy.ViewModel.ViewModel
+import io.github.ponnamkarthik.richlinkpreview.ViewListener
 import kotlinx.android.synthetic.main.activity_text_note.*
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.hintTextColor
 import petrov.kristiyan.colorpicker.ColorPicker
 import petrov.kristiyan.colorpicker.ColorPicker.OnFastChooseColorListener
+import java.io.*
 import java.util.*
-import kotlin.collections.ArrayList
 
+
+const val REQUEST_CODE_DRAW = 111
+const val REQUEST_CODE_CAMERA = 7777
+const val REQUEST_CODE_GALLERY = 69
 
 class TextNoteActivity : AppCompatActivity() {
 
@@ -39,6 +51,10 @@ class TextNoteActivity : AppCompatActivity() {
     lateinit var contentNote: EditText
     lateinit var etAddCheck: EditText
     lateinit var viewModel: ViewModel
+    lateinit var bitmap: Bitmap
+    lateinit var outputStream: OutputStream
+    var pathString: String = ""
+
     var finalColor: Int = -1
 
     var bigArchive: Boolean = false
@@ -74,10 +90,16 @@ class TextNoteActivity : AppCompatActivity() {
         etAddCheck.visibility = View.GONE
         divider.visibility = View.GONE
         tv_status.visibility = View.GONE
+        ivAddTNA.visibility = View.GONE
+        richLinkView.visibility = View.GONE
 
         val rq = intent.getStringExtra("REQUEST_CODE")
         val rq2 = intent.getStringExtra("CHECK_LIST")
-        val cardSize = intent.getIntExtra("CARD_SIZE",0)
+        val rq3 = intent.getStringExtra("DRAW")
+        val rq4 = intent.getStringExtra("IMAGE_CAMERA")
+        val rq5 = intent.getStringExtra("IMAGE_FILE")
+        val cardSize = intent.getIntExtra("CARD_SIZE", 0)
+        val pathStringFromMain = intent.getStringExtra("PATH_TO_IMAGE")
 
         if (rq2 == "opened_from_check_list") {
             animals = mutableListOf()
@@ -90,6 +112,38 @@ class TextNoteActivity : AppCompatActivity() {
                 CheckListAdapter(animals, this)
             etAddCheck.setOnEditorActionListener(onEditorListener)
 
+        }
+
+        if (rq3 == "opened_from_drawing") {
+            val intent = Intent(this, DrawingActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE_DRAW)
+        }
+
+        bs_draw.setOnClickListener {
+            val intent = Intent(this, DrawingActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE_DRAW)
+        }
+
+        if (rq4 == "opened_from_camera") {
+            val intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(intent, REQUEST_CODE_CAMERA)
+        }
+
+        bs_camera.setOnClickListener {
+            val intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(intent, REQUEST_CODE_CAMERA)
+        }
+
+        if (rq5 == "opened_from_file") {
+            val photoPickerIntent = Intent(Intent.ACTION_PICK)
+            photoPickerIntent.type = "image/*"
+            startActivityForResult(photoPickerIntent, REQUEST_CODE_GALLERY)
+        }
+
+        bs_choose_file.setOnClickListener {
+            val photoPickerIntent = Intent(Intent.ACTION_PICK)
+            photoPickerIntent.type = "image/*"
+            startActivityForResult(photoPickerIntent, REQUEST_CODE_GALLERY)
         }
 
         if (rq == "opened_from_main_activity") {
@@ -109,9 +163,49 @@ class TextNoteActivity : AppCompatActivity() {
                 iv_pin.setImageResource(R.drawable.ic_push_pin_final)
             }
 
+            if (pathStringFromMain != "") {
+                ivAddTNA.visibility = View.VISIBLE
+                bs_camera.visibility = View.GONE
+                bs_choose_file.visibility = View.GONE
+                bs_draw.visibility = View.GONE
+
+                pathString = pathStringFromMain!!
+                val imgFile = File(pathStringFromMain)
+                if (imgFile.exists()) {
+                    val bitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
+                    ivAddTNA.setImageBitmap(bitmap)
+                }
+            }
+
             val title = intent.getStringExtra("INTENT_TITLE")
             val description = intent.getStringExtra("INTENT_NOTE")
             finalColor = intent.getIntExtra("INTENT_COLOR", -1)
+
+            val connectivityManager: ConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val activeNetworkInfo = connectivityManager.activeNetworkInfo
+            val check =  activeNetworkInfo != null && activeNetworkInfo.isConnected
+
+            if(check){
+                if (description!!.contains("https")){
+                    //TODO: Enable rich link previews here :)
+                    richLinkView.setLink(
+                        description,
+                        object : ViewListener {
+                            override fun onSuccess(status: Boolean) {
+                                //Toast.makeText(this@TextNoteActivity, "converted", Toast.LENGTH_SHORT).show()
+                            }
+
+                            override fun onError(e: Exception) {
+                                Toast.makeText(
+                                    this@TextNoteActivity,
+                                    e.printStackTrace().toString(),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        })
+                    richLinkView.visibility = View.VISIBLE
+                }
+            }
 
             if (finalColor == 0)
                 finalColor = -1
@@ -139,7 +233,7 @@ class TextNoteActivity : AppCompatActivity() {
             ColorPicker(this).setDefaultColorButton(finalColor)
 
 
-            if (cardSize > 0){
+            if (cardSize > 0) {
                 rv_check_list.visibility = View.VISIBLE
                 etAddCheck.visibility = View.VISIBLE
                 contentNote.visibility = View.GONE
@@ -149,10 +243,20 @@ class TextNoteActivity : AppCompatActivity() {
                     CheckListAdapter(animals, this)
                 etAddCheck.setOnEditorActionListener(onEditorListener)
 
-                animals.add(Inception(intent.getStringExtra("0"), intent.getBooleanExtra("FIRST_CHECK", false)))
+                animals.add(
+                    Inception(
+                        intent.getStringExtra("0"),
+                        intent.getBooleanExtra("FIRST_CHECK", false)
+                    )
+                )
 
-                for (i in 1 until cardSize){
-                    animals.add(Inception(intent.getStringExtra(i.toString()), intent.getBooleanExtra((-i).toString(), false)))
+                for (i in 1 until cardSize) {
+                    animals.add(
+                        Inception(
+                            intent.getStringExtra(i.toString()),
+                            intent.getBooleanExtra((-i).toString(), false)
+                        )
+                    )
                 }
             }
 
@@ -328,15 +432,17 @@ class TextNoteActivity : AppCompatActivity() {
             finish()
         }
 
+
+
         if (cardSize > 0)
             bs_tickBoxes.text = "Hide tickboxes"
         else
             bs_tickBoxes.text = "Tick boxes"
 
         bs_tickBoxes.setOnClickListener {
-            if (cardSize > 0){
+            if (cardSize > 0) {
                 var text = ""
-                for (i in 0 until cardSize){
+                for (i in 0 until cardSize) {
                     text += "${animals[i].inputName}\n"
                 }
                 rv_check_list.visibility = View.GONE
@@ -344,15 +450,14 @@ class TextNoteActivity : AppCompatActivity() {
                 contentNote.visibility = View.VISIBLE
                 contentNote.setText(text)
                 animals = mutableListOf()
-            }
-            else {
+            } else {
                 val list = contentNote.text.toString().split("\n")
-                for (i in list.indices){
+                for (i in list.indices) {
                     animals.add(
                         Inception(
-                        list[i],
-                        false
-                    )
+                            list[i],
+                            false
+                        )
                     )
                 }
                 rv_check_list.visibility = View.VISIBLE
@@ -436,7 +541,6 @@ class TextNoteActivity : AppCompatActivity() {
                 .setRoundColorButton(true)
                 .show()
         }
-
     }
 
     var onEditorListener = TextView.OnEditorActionListener { textView, i, keyEvent ->
@@ -553,7 +657,7 @@ class TextNoteActivity : AppCompatActivity() {
         if (finalColor != -1)
             window.statusBarColor = finalColor
 
-        if (finalTitle.isEmpty() && content.isEmpty() && animals.isEmpty()) {
+        if (finalTitle.isEmpty() && content.isEmpty() && animals.isEmpty() && pathString.isEmpty()) {
             Toast.makeText(this, "Empty note discarded", Toast.LENGTH_SHORT).show()
         } else {
             viewModel.insert(
@@ -565,7 +669,8 @@ class TextNoteActivity : AppCompatActivity() {
                     pinned = kingPin,
                     deleted = bigDelete,
                     color = finalColor,
-                    checkList = animals
+                    checkList = animals,
+                    pathToImage = pathString
                 )
             )
 
@@ -573,7 +678,6 @@ class TextNoteActivity : AppCompatActivity() {
     }
 
     private fun updateNote() {
-        val rq = intent.getStringExtra("REQUEST_CODE")
 
         val finalTitle = titleNote.text.toString()
         val content = contentNote.text.toString()
@@ -586,17 +690,80 @@ class TextNoteActivity : AppCompatActivity() {
             pinned = kingPin,
             deleted = bigDelete,
             color = finalColor,
-            checkList = animals
+            checkList = animals,
+            pathToImage = pathString
         )
 
         note.id = intent.getLongExtra("INTENT_NOTE_ID", -1)
 
-        if (finalTitle == "" && content == "" && animals.isEmpty()) {
+        if (finalTitle == "" && content == "" && animals.isEmpty() && pathString.isEmpty()) {
             viewModel.delete(note)
             Toast.makeText(this, "Empty note discarded", Toast.LENGTH_SHORT).show()
         } else {
             viewModel.update(note)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if (data != null && resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_CODE_DRAW -> {
+                    val result = data.getByteArrayExtra("bitmap")
+                    bitmap = BitmapFactory.decodeByteArray(result, 0, result.size)
+                    ivAddTNA.setImageBitmap(bitmap)
+                    ivAddTNA.visibility = View.VISIBLE
+                    saveImage(bitmap)
+                }
+                REQUEST_CODE_CAMERA -> {
+                    val bitmap2 = data.extras?.get("data") as Bitmap
+                    ivAddTNA.setImageBitmap(bitmap2)
+                    ivAddTNA.visibility = View.VISIBLE
+                    saveImage(bitmap2)
+                }
+                REQUEST_CODE_GALLERY -> {
+                    val imageUri: Uri? = data.data
+                    val imageStream: InputStream? = contentResolver.openInputStream(imageUri!!)
+                    val selectedImage = BitmapFactory.decodeStream(imageStream)
+                    ivAddTNA.setImageBitmap(selectedImage)
+                    ivAddTNA.visibility = View.VISIBLE
+
+                    val filepath = Environment.getExternalStorageDirectory()
+                    val dir = File(filepath.absolutePath + "/NotiFy/")
+                    dir.mkdir()
+                    val currentTime = System.currentTimeMillis().toString()
+                    val file = File(dir, "$currentTime.jpg")
+                    pathString = filepath.absolutePath + "/NotiFy/" + "$currentTime.jpg"
+                    try {
+                        outputStream = FileOutputStream(file)
+                    }catch (e: FileNotFoundException){
+                        e.printStackTrace()
+                    }
+                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 50, outputStream)
+                    outputStream.flush()
+                    outputStream.close()
+                }
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun saveImage(bitmap: Bitmap) {
+        val filepath = Environment.getExternalStorageDirectory()
+        val dir = File(filepath.absolutePath + "/NotiFy/")
+        dir.mkdir()
+        val currentTime = System.currentTimeMillis().toString()
+        val file = File(dir, "$currentTime.jpg")
+        pathString = filepath.absolutePath + "/NotiFy/" + "$currentTime.jpg"
+        try {
+            outputStream = FileOutputStream(file)
+        }catch (e: FileNotFoundException){
+            e.printStackTrace()
+        }
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        outputStream.flush()
+        outputStream.close()
     }
 
 }

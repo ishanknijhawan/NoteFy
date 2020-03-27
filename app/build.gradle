@@ -71,4 +71,10 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.libraries.places:places:2.1.0'
+
+    //drawing
+    implementation 'com.github.divyanshub024:AndroidDraw:v0.1'
+    implementation 'io.github.ponnamkarthik:richlinkpreview:1.0.9'
+    implementation 'org.jsoup:jsoup:1.12.1'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

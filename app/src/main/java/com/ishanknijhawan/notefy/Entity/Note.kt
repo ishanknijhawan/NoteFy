@@ -17,7 +17,8 @@ data class Note(
     var deleted: Boolean,
     var archive: Boolean,
     var color: Int = Color.parseColor("#FFFFFF"),
-    var checkList: MutableList<Inception>
+    var checkList: MutableList<Inception>,
+    var pathToImage: String
 )
 
 class BooleanHelper(val listList: ArrayList<Inception>)
