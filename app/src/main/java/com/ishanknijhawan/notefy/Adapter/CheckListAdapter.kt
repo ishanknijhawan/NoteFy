@@ -1,24 +1,17 @@
 package com.ishanknijhawan.notefy.Adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.ishanknijhawan.notefy.Entity.BooleanHelper
 import com.ishanknijhawan.notefy.Entity.Inception
 import com.ishanknijhawan.notefy.R
-import com.ishanknijhawan.notefy.ui.TextNoteActivity
-import kotlinx.android.synthetic.main.activity_text_note.view.*
 import kotlinx.android.synthetic.main.checklist_note_layout.view.*
-import org.jetbrains.anko.textColor
+
 
 class CheckListAdapter(val items: MutableList<Inception>, val context: Context) :
     RecyclerView.Adapter<ViewHolder2>() {
@@ -50,16 +43,24 @@ class CheckListAdapter(val items: MutableList<Inception>, val context: Context) 
 
         holder.checkBox.isChecked = items[position].inputCheck
 
+        if (holder.checkBox.isChecked){
+            holder.mainText.paintFlags = holder.mainText.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        }
+
         holder.checkBox.setOnClickListener {
+            items[position].inputCheck = holder.checkBox.isChecked
             if (holder.checkBox.isChecked){
-                holder.mainText.textColor = Color.parseColor("#696969")
                 holder.mainText.paintFlags = holder.mainText.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
-            items[position].inputCheck = holder.checkBox.isChecked
+            else
+                holder.mainText.paintFlags = (holder.mainText.paintFlags) and Paint.STRIKE_THRU_TEXT_FLAG.inv()
         }
         holder.editTextCB.setOnEditorActionListener { textView, i, keyEvent ->
             if (i == EditorInfo.IME_ACTION_DONE){
                 items[position].inputName = holder.editTextCB.text.toString()
+                items.add(position+1, Inception("", false))
+                holder.mainText.requestFocus()
+                notifyDataSetChanged()
             }
             return@setOnEditorActionListener true
         }

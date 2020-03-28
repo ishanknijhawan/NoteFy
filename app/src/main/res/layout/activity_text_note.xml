@@ -81,7 +81,7 @@
             app:srcCompat="@drawable/ic_archive_black_24dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -104,6 +104,7 @@
 
         <ImageView
             android:id="@+id/ivAddTNA"
+            android:layout_below="@id/et_note_title"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:padding="10dp"
@@ -119,22 +120,32 @@
             android:layout_marginTop="12dp"
             android:id="@+id/rv_check_list"
             android:layout_width="match_parent"
+            android:layout_below="@id/ivAddTNA"
             android:layout_height="wrap_content"/>
 
-        <EditText
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nvScroll"
+            android:layout_below="@id/rv_check_list"
             android:layout_width="match_parent"
-            android:layout_marginLeft="50dp"
-            android:padding="12dp"
-            android:background="@drawable/simple_white_background"
-            android:hint="+     Add item.."
-            android:textSize="16dp"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:textColorHint="#B2B2B2"
-            android:textColor="#383838"
-            android:id="@+id/et_add_note"
-            android:layout_marginRight="8dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_marginLeft="50dp"
+                android:padding="12dp"
+                android:background="@drawable/simple_white_background"
+                android:hint="+     Add item.."
+                android:textSize="16dp"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:textColorHint="#B2B2B2"
+                android:textColor="#383838"
+                android:layout_below="@id/rv_check_list"
+                android:id="@+id/et_add_note"
+                android:layout_marginRight="8dp"
+                android:layout_height="wrap_content"/>
+
+        </androidx.core.widget.NestedScrollView>
 
         <View
             android:layout_width="match_parent"
@@ -142,6 +153,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:id="@+id/divider"
+            android:layout_below="@id/nvScroll"
             android:background="#B2B2B2"
             android:layout_height="1dp"/>
 
@@ -150,6 +162,7 @@
             android:layout_marginLeft="8dp"
             android:padding="8dp"
             android:textSize="16dp"
+            android:layout_below="@id/divider"
             android:text="4 ticked items"
             android:textColorHint="#B2B2B2"
             android:textColor="#b2b2b2"
@@ -159,6 +172,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="8dp"
+            android:layout_below="@id/tv_status"
             android:id="@+id/rv_check_list_done"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -169,6 +183,7 @@
             android:padding="8dp"
             android:background="@drawable/simple_white_background"
             android:hint="Note"
+            android:layout_below="@id/rv_check_list_done"
             android:textSize="16dp"
             android:textColorHint="#B2B2B2"
             android:textColor="#000000"
@@ -180,6 +195,7 @@
             android:id="@+id/richLinkView"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
+            android:layout_below="@id/et_note_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -189,6 +205,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
+            android:layout_below="@id/richLinkView"
             android:layout_marginTop="10dp"
             android:text="Tomorrow, 6:55 PM "
             android:textColor="#4E4E4E"
@@ -198,7 +215,7 @@
             app:chipStrokeColor="#d3d3d3"
             app:chipStrokeWidth="1dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

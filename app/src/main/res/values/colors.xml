@@ -2,7 +2,7 @@
 <resources>
     <color name="colorGreen">#00E600</color>
     <color name="colorRed">#FF0000</color>
-    <color name="colorPrimary">#fafafa</color>
+    <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#a9a9a9</color>
     <color name="colorAccent">#FF9933</color>
     <color name="bright_pink">#f07b70</color>

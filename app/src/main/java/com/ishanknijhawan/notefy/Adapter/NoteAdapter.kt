@@ -50,7 +50,7 @@ class NoteAdapter(var items: List<Note>, val context: Context)
         holder.tvNoteView.text = items[position].description
         holder.itemNoteLayout.cardElevation = 0F
 
-        holder.cardCheckList.layoutManager = LinearLayoutManager(this.context)
+        holder.cardCheckList.layoutManager = LinearLayoutManager(context)
         holder.cardCheckList.adapter = CardListAdapter(items[position].checkList, this.context)
         holder.ivLink.visibility = View.GONE
 
