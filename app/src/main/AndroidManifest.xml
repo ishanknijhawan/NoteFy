@@ -25,7 +25,7 @@
         <activity android:name=".ui.MainActivity" />
         <activity
             android:name=".ui.TextNoteActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/TextNoteTheme" />
         <activity
             android:name=".ui.SplashActivity"

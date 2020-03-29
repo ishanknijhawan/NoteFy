@@ -3,13 +3,17 @@ package com.ishanknijhawan.notefy.Adapter
 import android.content.Context
 import android.graphics.Paint
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.CheckBox
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.ishanknijhawan.notefy.Entity.Inception
 import com.ishanknijhawan.notefy.R
+import com.ishanknijhawan.notefy.ui.TextNoteActivity
 import kotlinx.android.synthetic.main.checklist_note_layout.view.*
 
 
@@ -35,11 +39,11 @@ class CheckListAdapter(val items: MutableList<Inception>, val context: Context) 
 
     override fun onBindViewHolder(holder: ViewHolder2, position: Int) {
         holder.mainText.setText(items[position].inputName)
-        holder.deleteButton.setOnClickListener {
-            items.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, items.size)
-        }
+//        holder.deleteButton.setOnClickListener {
+//            items.removeAt(position)
+//            notifyItemRemoved(position)
+//            notifyItemRangeChanged(position, items.size)
+//        }
 
         holder.checkBox.isChecked = items[position].inputCheck
 
@@ -58,11 +62,18 @@ class CheckListAdapter(val items: MutableList<Inception>, val context: Context) 
         holder.editTextCB.setOnEditorActionListener { textView, i, keyEvent ->
             if (i == EditorInfo.IME_ACTION_DONE){
                 items[position].inputName = holder.editTextCB.text.toString()
-                items.add(position+1, Inception("", false))
-                holder.mainText.requestFocus()
-                notifyDataSetChanged()
+                Toast.makeText(context,"item updated", Toast.LENGTH_SHORT).show()
+                //items.add(position+1, Inception("", false))
+                //notifyDataSetChanged()
             }
             return@setOnEditorActionListener true
+        }
+
+        holder.ivDrag.setOnTouchListener { view, motionEvent ->
+            if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN){
+                TextNoteActivity().touchHelper?.startDrag(holder)
+            }
+            true
         }
     }
 
@@ -71,6 +82,7 @@ class CheckListAdapter(val items: MutableList<Inception>, val context: Context) 
 class ViewHolder2(view: View) : RecyclerView.ViewHolder(view) {
     val checkBox: CheckBox = view.cb_checkbox
     val mainText = view.et_check_list
-    val deleteButton = view.iv_delete
+    //val deleteButton = view.iv_delete
     val editTextCB = view.et_check_list
+    val ivDrag: ImageView = view.ivDrag
 }

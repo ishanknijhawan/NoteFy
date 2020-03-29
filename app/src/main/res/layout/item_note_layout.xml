@@ -60,10 +60,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:id="@+id/tv_note"
-                android:textSize="15dp"
+                android:textSize="16dp"
                 android:maxLines="12"
                 android:text="Note"
-                android:textColor="#2a2a2a"
+                android:textColor="#000000"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_height="wrap_content"/>

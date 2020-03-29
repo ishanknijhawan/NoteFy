@@ -18,14 +18,19 @@ import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.divyanshu.draw.activity.DrawingActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.snackbar.Snackbar
 import com.ishanknijhawan.notefy.Adapter.CheckListAdapter
 import com.ishanknijhawan.notefy.Entity.Inception
 import com.ishanknijhawan.notefy.Entity.Note
@@ -33,6 +38,7 @@ import com.ishanknijhawan.notefy.R
 import com.ishanknijhawan.notefy.ViewModel.ViewModel
 import io.github.ponnamkarthik.richlinkpreview.ViewListener
 import kotlinx.android.synthetic.main.activity_text_note.*
+import kotlinx.android.synthetic.main.fragment_main.*
 import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.hintTextColor
 import petrov.kristiyan.colorpicker.ColorPicker
@@ -61,6 +67,7 @@ class TextNoteActivity : AppCompatActivity() {
     var kingPin: Boolean = false
     var bigDelete: Boolean = false
     var animals: MutableList<Inception> = mutableListOf()
+    var touchHelper: ItemTouchHelper? = null
 
     var dateTime = ""
     var mYear: Int = 0
@@ -432,15 +439,23 @@ class TextNoteActivity : AppCompatActivity() {
             finish()
         }
 
+        bs_share.setOnClickListener {
+            if (contentNote.text.isEmpty())
+                Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show()
+            else{
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, contentNote.text.toString())
+                    type = "text/plain"
+                }
 
-
-        if (cardSize > 0)
-            bs_tickBoxes.text = "Hide tickboxes"
-        else
-            bs_tickBoxes.text = "Tick boxes"
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                startActivity(shareIntent)
+            }
+        }
 
         bs_tickBoxes.setOnClickListener {
-            if (cardSize > 0) {
+            if (bs_tickBoxes.text == "Hide tickboxes") {
                 var text = ""
                 for (i in 0 until cardSize) {
                     text += "${animals[i].inputName}\n"
@@ -450,6 +465,8 @@ class TextNoteActivity : AppCompatActivity() {
                 contentNote.visibility = View.VISIBLE
                 contentNote.setText(text)
                 animals = mutableListOf()
+                bs_tickBoxes.text = "Tick boxes"
+
             } else {
                 val list = contentNote.text.toString().split("\n")
                 for (i in list.indices) {
@@ -469,6 +486,7 @@ class TextNoteActivity : AppCompatActivity() {
                 rv_check_list.adapter =
                     CheckListAdapter(animals, this)
                 etAddCheck.setOnEditorActionListener(onEditorListener)
+                bs_tickBoxes.text = "Hide tickboxes"
             }
         }
 
@@ -541,6 +559,58 @@ class TextNoteActivity : AppCompatActivity() {
                 .setRoundColorButton(true)
                 .show()
         }
+
+        touchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.RIGHT){
+            override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder
+            ): Boolean {
+                val sourcePosition = p1.adapterPosition
+                val targetPosition = p2.adapterPosition
+                Collections.swap(animals, sourcePosition, targetPosition)
+                (rv_check_list.adapter as CheckListAdapter).notifyItemMoved(sourcePosition, targetPosition)
+                return true
+            }
+
+            override fun onSwiped(p0: RecyclerView.ViewHolder, p1: Int) {
+                var buffer = animals[p0.adapterPosition].inputName
+                var bufferCheck = animals[p0.adapterPosition].inputCheck
+
+                animals.removeAt(p0.adapterPosition)
+                (rv_check_list.adapter as CheckListAdapter).notifyDataSetChanged()
+                //(rv_check_list.adapter as CheckListAdapter).notifyItemRemoved(p1)
+                //(rv_check_list.adapter as CheckListAdapter).notifyItemRangeChanged(p1, animals.size)
+                Snackbar.make(lll, "Deleted", Snackbar.LENGTH_LONG)
+                    .apply {
+                        view.layoutParams = (view.layoutParams as CoordinatorLayout.LayoutParams).apply {
+                            setMargins(16, 16, 16, 16)
+                        }
+                        //view.background = resources.getDrawable(R.drawable.round_corner, null)
+                    }
+                    .setActionTextColor(Color.parseColor("#FFA500"))
+                    .setAction("Undo")
+                    {
+//                        if (p0.adapterPosition == animals.size-1){
+//                            animals.add(animals.size, Inception(buffer, bufferCheck))
+//                            CheckListAdapter(animals, this@TextNoteActivity).notifyItemInserted(animals.size)
+//                            (rv_check_list.adapter as CheckListAdapter).notifyDataSetChanged()
+//                            Toast.makeText(this@TextNoteActivity, "this one", Toast.LENGTH_SHORT).show()
+//                        }
+//                        else {
+                            animals.add(p0.adapterPosition, Inception(buffer, bufferCheck))
+                            CheckListAdapter(animals, this@TextNoteActivity).notifyItemInserted(p0.adapterPosition)
+                            (rv_check_list.adapter as CheckListAdapter).notifyDataSetChanged()
+                        //}
+
+                        buffer = ""
+                        bufferCheck = false
+                    }
+                    .show()
+            }
+
+        })
+
+        touchHelper!!.attachToRecyclerView(rv_check_list)
     }
 
     var onEditorListener = TextView.OnEditorActionListener { textView, i, keyEvent ->
@@ -557,6 +627,7 @@ class TextNoteActivity : AppCompatActivity() {
         }
         return@OnEditorActionListener true
     }
+
 
     private fun datePickerFunction() { // Get Current Date
         val c: Calendar = Calendar.getInstance()
