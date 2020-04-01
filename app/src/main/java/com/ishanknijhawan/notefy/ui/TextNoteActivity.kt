@@ -285,6 +285,11 @@ class TextNoteActivity : AppCompatActivity() {
         }
 
         addMenu.setOnClickListener {
+            if (cardSize > 0)
+                bs_tickBoxes.text = "Hide tickboxes"
+            else
+                bs_tickBoxes.text = "Tick boxes"
+
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
 
@@ -395,19 +400,31 @@ class TextNoteActivity : AppCompatActivity() {
                     iv_archive.setImageResource(R.drawable.ic_unarchive_black_24dp)
                     bigArchive = true
                     Toast.makeText(this, "Note Archived", Toast.LENGTH_SHORT).show()
-                    updateNote()
+                    if (rq == "opened_from_main_activity") {
+                        updateNote()
+                    } else {
+                        saveNote()
+                    }
                 }
                 kingPin -> {
                     iv_archive.setImageResource(R.drawable.ic_unarchive_black_24dp)
                     bigArchive = true
                     Toast.makeText(this, "Note unpinned and Archived", Toast.LENGTH_SHORT).show()
-                    updateNote()
+                    if (rq == "opened_from_main_activity") {
+                        updateNote()
+                    } else {
+                        saveNote()
+                    }
                 }
                 else -> {
                     iv_archive.setImageResource(R.drawable.ic_archive_black_24dp)
                     bigArchive = false
                     Toast.makeText(this, "Note Unarchived", Toast.LENGTH_SHORT).show()
-                    updateNote()
+                    if (rq == "opened_from_main_activity") {
+                        updateNote()
+                    } else {
+                        saveNote()
+                    }
                 }
             }
 
@@ -498,7 +515,11 @@ class TextNoteActivity : AppCompatActivity() {
                     iv_pin.setImageResource(R.drawable.ic_push_pin_black_final)
                     kingPin = true
                     Toast.makeText(this, "Note Pinned", Toast.LENGTH_SHORT).show()
-                    updateNote()
+                    if (rq == "opened_from_main_activity") {
+                        updateNote()
+                    } else {
+                        saveNote()
+                    }
                 }
                 bigArchive -> {
                     iv_archive.setImageResource(R.drawable.ic_archive_black_24dp)
@@ -506,14 +527,22 @@ class TextNoteActivity : AppCompatActivity() {
                     kingPin = true
                     bigArchive = false
                     Toast.makeText(this, "Note unarchived and Pinned", Toast.LENGTH_SHORT).show()
-                    updateNote()
+                    if (rq == "opened_from_main_activity") {
+                        updateNote()
+                    } else {
+                        saveNote()
+                    }
                     finish()
                 }
                 else -> {
                     iv_pin.setImageResource(R.drawable.ic_push_pin_final)
                     kingPin = false
                     //Toast.makeText(this,"Note unpinned",Toast.LENGTH_SHORT).show()
-                    updateNote()
+                    if (rq == "opened_from_main_activity") {
+                        updateNote()
+                    } else {
+                        saveNote()
+                    }
                 }
             }
 
@@ -580,32 +609,6 @@ class TextNoteActivity : AppCompatActivity() {
                 (rv_check_list.adapter as CheckListAdapter).notifyDataSetChanged()
                 //(rv_check_list.adapter as CheckListAdapter).notifyItemRemoved(p1)
                 //(rv_check_list.adapter as CheckListAdapter).notifyItemRangeChanged(p1, animals.size)
-                Snackbar.make(lll, "Deleted", Snackbar.LENGTH_LONG)
-                    .apply {
-                        view.layoutParams = (view.layoutParams as CoordinatorLayout.LayoutParams).apply {
-                            setMargins(16, 16, 16, 16)
-                        }
-                        //view.background = resources.getDrawable(R.drawable.round_corner, null)
-                    }
-                    .setActionTextColor(Color.parseColor("#FFA500"))
-                    .setAction("Undo")
-                    {
-//                        if (p0.adapterPosition == animals.size-1){
-//                            animals.add(animals.size, Inception(buffer, bufferCheck))
-//                            CheckListAdapter(animals, this@TextNoteActivity).notifyItemInserted(animals.size)
-//                            (rv_check_list.adapter as CheckListAdapter).notifyDataSetChanged()
-//                            Toast.makeText(this@TextNoteActivity, "this one", Toast.LENGTH_SHORT).show()
-//                        }
-//                        else {
-                            animals.add(p0.adapterPosition, Inception(buffer, bufferCheck))
-                            CheckListAdapter(animals, this@TextNoteActivity).notifyItemInserted(p0.adapterPosition)
-                            (rv_check_list.adapter as CheckListAdapter).notifyDataSetChanged()
-                        //}
-
-                        buffer = ""
-                        bufferCheck = false
-                    }
-                    .show()
             }
 
         })
@@ -813,6 +816,9 @@ class TextNoteActivity : AppCompatActivity() {
                     selectedImage.compress(Bitmap.CompressFormat.JPEG, 50, outputStream)
                     outputStream.flush()
                     outputStream.close()
+                }
+                else -> {
+                    TextNoteActivity().finish()
                 }
             }
         }

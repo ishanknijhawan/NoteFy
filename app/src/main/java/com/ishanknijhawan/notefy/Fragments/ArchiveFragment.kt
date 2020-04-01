@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -26,6 +28,8 @@ import com.ishanknijhawan.notefy.FirebaseDatabase.FireStore
 import com.ishanknijhawan.notefy.R
 import com.ishanknijhawan.notefy.ViewModel.ViewModel
 import kotlinx.android.synthetic.main.fragment_archive.*
+import kotlinx.android.synthetic.main.fragment_main.*
+import java.util.*
 
 
 class ArchiveFragment : Fragment() {
@@ -43,6 +47,18 @@ class ArchiveFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_archive, container, false)
 
+        val iv3 = view.findViewById<ImageView>(R.id.imageView3)
+        val tv3 = view.findViewById<TextView>(R.id.textView4)
+
+//        if (allNotes.isEmpty()){
+//            iv3.visibility = View.VISIBLE
+//            tv3.visibility = View.VISIBLE
+//        }
+//        else {
+//            iv3.visibility = View.GONE
+//            tv3.visibility = View.GONE
+//        }
+
         prefs = PreferenceManager.getDefaultSharedPreferences(this.requireContext())
 
         val user = FirebaseAuth.getInstance().currentUser?.uid
@@ -52,9 +68,9 @@ class ArchiveFragment : Fragment() {
 
             object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
                 override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
+                    p0: RecyclerView,
+                    p1: RecyclerView.ViewHolder,
+                    p2: RecyclerView.ViewHolder
                 ): Boolean {
                     return true
                 }
@@ -68,12 +84,12 @@ class ArchiveFragment : Fragment() {
 
                     viewModel.update(allNotes[position])
                     Snackbar.make(fragmentContainer, "Note moved to bin", Snackbar.LENGTH_LONG)
-                        .apply {
-                            view.layoutParams =
-                                (view.layoutParams as CoordinatorLayout.LayoutParams).apply {
-                                    setMargins(16, 16, 16, 16)
-                                }
-                        }
+//                        .apply {
+//                            view.layoutParams =
+//                                (view.layoutParams as CoordinatorLayout.LayoutParams).apply {
+//                                    setMargins(16, 16, 16, 16)
+//                                }
+//                        }
                         .setActionTextColor(Color.parseColor("#FFA500"))
                         .setAction("Undo")
                         {
@@ -89,11 +105,12 @@ class ArchiveFragment : Fragment() {
 
         val helper2 by lazy {
 
-            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            object : ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.RIGHT) {
                 override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
+                    p0: RecyclerView,
+                    p1: RecyclerView.ViewHolder,
+                    p2: RecyclerView.ViewHolder
                 ): Boolean {
                     return true
                 }
@@ -106,12 +123,12 @@ class ArchiveFragment : Fragment() {
 
                     viewModel.update(allNotes[position])
                     Snackbar.make(fragmentContainer, "Note Unarchived", Snackbar.LENGTH_LONG)
-                        .apply {
-                            view.layoutParams =
-                                (view.layoutParams as CoordinatorLayout.LayoutParams).apply {
-                                    setMargins(16, 16, 16, 16)
-                                }
-                        }
+//                        .apply {
+//                            view.layoutParams =
+//                                (view.layoutParams as CoordinatorLayout.LayoutParams).apply {
+//                                    setMargins(16, 16, 16, 16)
+//                                }
+//                        }
                         .setActionTextColor(Color.parseColor("#FFA500"))
                         .setAction("Undo")
                         {
@@ -124,11 +141,49 @@ class ArchiveFragment : Fragment() {
             }
         }
 
+        val helper3 by lazy {
+            object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN or
+                    ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+                0) {
+                override fun onMove(
+                    p0: RecyclerView,
+                    p1: RecyclerView.ViewHolder,
+                    p2: RecyclerView.ViewHolder
+                ): Boolean {
+                    val sourcePosition = p1.adapterPosition
+                    val targetPosition = p2.adapterPosition
+                    Collections.swap(allNotes, sourcePosition, targetPosition)
+
+                    val temp = allNotes[sourcePosition].id
+                    allNotes[sourcePosition].id = allNotes[targetPosition].id
+                    allNotes[targetPosition].id = temp
+
+                    (rv_archive.adapter as NoteAdapter).notifyItemMoved(sourcePosition, targetPosition)
+                    return true
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                }
+            }
+        }
+
         viewModel = ViewModelProviders.of(this).get(ViewModel::class.java)
         getAllNotes = viewModel.getArchivedNotes()
 
         getAllNotes.observe(this, Observer {
+
             allNotes = getAllNotes.value!!
+
+            if (allNotes.isEmpty()){
+                iv3.visibility = View.VISIBLE
+                tv3.visibility = View.VISIBLE
+            }
+            else {
+                iv3.visibility = View.GONE
+                tv3.visibility = View.GONE
+            }
+
             rv_archive.layoutManager =
                 StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
             rv_archive.adapter = NoteAdapter(allNotes, this.requireContext())

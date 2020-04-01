@@ -40,7 +40,7 @@
         android:layout_marginTop="5dp"
         android:layout_gravity="start"
         android:textColor="#000"
-        android:padding="5dp"
+        android:padding="8dp"
         android:drawableLeft="@drawable/ic_camera_alt"
         android:drawablePadding="20dp"
         android:layout_height="wrap_content"/>
@@ -52,7 +52,7 @@
         android:layout_below="@id/tvOpenCamera"
         android:drawableLeft="@drawable/ic_photo"
         android:drawablePadding="20dp"
-        android:padding="5dp"
+        android:padding="8dp"
         android:clickable="true"
         android:focusable="true"
         android:layout_marginTop="10dp"

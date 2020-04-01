@@ -1,19 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
     android:background="#FFFFFF"
-    android:id="@+id/fragmentContainer"
+    android:id="@+id/fragmentContainer2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:id="@+id/rv_main_list"
-        android:layout_marginTop="70dp"
-        android:padding="4dp"
-        android:layout_marginBottom="45dp"
-        android:layout_height="wrap_content" />
+        android:orientation="vertical"
+        android:paddingTop="70dp"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_pinned"
+            android:padding="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:text="PINNED"
+            android:textSize="12dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:id="@+id/rv_pinned_list"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/imageView99"
+            android:layout_width="match_parent"
+            android:layout_marginTop="220dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_notes_big" />
+
+        <TextView
+            android:id="@+id/textView99"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="Your notes appear here"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/tv_others"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OTHERS"
+            android:textSize="12dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:id="@+id/rv_main_list"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
@@ -21,9 +69,10 @@
         android:layout_margin="2dp"
         app:fabSize="auto"
         android:id="@+id/fabSpeedDial"
-        android:backgroundTint="#FF9933"
+        android:backgroundTint="@color/colorAccent"
+        android:foregroundTint="#fff"
         android:src="@drawable/ic_edittttt"
-        android:elevation="16dp"
+        android:elevation="8dp"
         app:layout_anchor="@id/bottom_app_bar"/>
 
     <com.google.android.material.bottomappbar.BottomAppBar
@@ -32,9 +81,8 @@
         android:layout_height="45dp"
         android:layout_gravity="bottom"
         app:fabCradleVerticalOffset="10dp"
-        android:elevation="16dp"
         app:fabCradleRoundedCornerRadius="10dp"
-        android:background="@drawable/white_transparent_background"
+        android:background="#FFFFFF"
         app:fabAlignmentMode="end"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

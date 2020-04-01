@@ -2,6 +2,8 @@ package com.ishanknijhawan.notefy.Adapter
 
 import android.content.Context
 import android.graphics.Paint
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -59,15 +61,30 @@ class CheckListAdapter(val items: MutableList<Inception>, val context: Context) 
             else
                 holder.mainText.paintFlags = (holder.mainText.paintFlags) and Paint.STRIKE_THRU_TEXT_FLAG.inv()
         }
-        holder.editTextCB.setOnEditorActionListener { textView, i, keyEvent ->
-            if (i == EditorInfo.IME_ACTION_DONE){
-                items[position].inputName = holder.editTextCB.text.toString()
-                Toast.makeText(context,"item updated", Toast.LENGTH_SHORT).show()
-                //items.add(position+1, Inception("", false))
-                //notifyDataSetChanged()
+//        holder.editTextCB.setOnEditorActionListener { textView, i, keyEvent ->
+//            if (i == EditorInfo.IME_ACTION_DONE){
+//                items[position].inputName = holder.editTextCB.text.toString()
+//                Toast.makeText(context,"item updated", Toast.LENGTH_SHORT).show()
+//                //items.add(position+1, Inception("", false))
+//                //notifyDataSetChanged()
+//            }
+//            return@setOnEditorActionListener true
+//        }
+
+        holder.editTextCB.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+
             }
-            return@setOnEditorActionListener true
-        }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                items[position].inputName = holder.editTextCB.text.toString()
+            }
+
+        })
 
         holder.ivDrag.setOnTouchListener { view, motionEvent ->
             if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN){

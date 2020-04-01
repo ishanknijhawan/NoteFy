@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -44,6 +45,16 @@ class DeletedActivity : AppCompatActivity() {
 
         getAllDeletedNotes.observe(this, Observer {
             allDeleted = getAllDeletedNotes.value!!
+
+            if (allDeleted.isEmpty()){
+                imageView69.visibility = View.VISIBLE
+                textView69.visibility = View.VISIBLE
+            }
+            else {
+                imageView69.visibility = View.GONE
+                textView69.visibility = View.GONE
+            }
+
             rv_deleted_list.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
             rv_deleted_list.adapter = NoteAdapter(allDeleted,this)
             noteAdapter = NoteAdapter(allDeleted, this)
