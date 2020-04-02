@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/ll_check_list"
-    android:padding="4dp"
     android:background="#00000000"
+    android:padding="4dp"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
@@ -13,9 +13,8 @@
         android:id="@+id/cb_checkbox"
         android:layout_width="wrap_content"
         android:buttonTint="#000000"
-        android:padding="6dp"
         android:layout_marginLeft="10dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.107"

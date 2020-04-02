@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.divyanshu.draw.activity.DrawingActivity
@@ -75,6 +76,52 @@ class TextNoteActivity : AppCompatActivity() {
     var mDay: Int = 0
     var mHour: Int = 0
     var mMinute: Int = 0
+
+    val itemTouchHelper by lazy {
+        val simpleItemTouchCallback =
+            object : ItemTouchHelper.SimpleCallback(UP or DOWN, END) {
+
+                override fun onMove(recyclerView: RecyclerView,
+                                    viewHolder: RecyclerView.ViewHolder,
+                                    target: RecyclerView.ViewHolder): Boolean {
+
+                    val adapter = recyclerView.adapter as CheckListAdapter
+                    val from = viewHolder.adapterPosition
+                    val to = target.adapterPosition
+
+                    Collections.swap(animals, from, to)
+                    // 3. Tell adapter to render the model update.
+                    adapter.notifyItemMoved(from, to)
+
+                    return true
+                }
+
+                override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+                    super.onSelectedChanged(viewHolder, actionState)
+
+                    if(actionState == ACTION_STATE_DRAG || actionState == ACTION_STATE_SWIPE){
+                        viewHolder?.itemView?.elevation = 8F
+                        //viewHolder?.itemView?.alpha = 1F
+                    }
+                }
+
+                override fun clearView(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder
+                ) {
+                    super.clearView(recyclerView, viewHolder)
+                    viewHolder.itemView.elevation = 0F
+                    //viewHolder.itemView.alpha = 1F
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder,
+                                      direction: Int) {
+                    animals.removeAt(viewHolder.adapterPosition)
+                    (rv_check_list.adapter as CheckListAdapter).notifyDataSetChanged()
+                }
+            }
+        ItemTouchHelper(simpleItemTouchCallback)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -589,9 +636,11 @@ class TextNoteActivity : AppCompatActivity() {
                 .show()
         }
 
+        itemTouchHelper.attachToRecyclerView(rv_check_list)
+
         touchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-            ItemTouchHelper.RIGHT){
+            UP or DOWN, RIGHT){
+
             override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder
             ): Boolean {
                 val sourcePosition = p1.adapterPosition
@@ -613,7 +662,11 @@ class TextNoteActivity : AppCompatActivity() {
 
         })
 
-        touchHelper!!.attachToRecyclerView(rv_check_list)
+        //touchHelper!!.attachToRecyclerView(rv_check_list)
+    }
+
+    fun startDragging(viewHolder: RecyclerView.ViewHolder) {
+        itemTouchHelper.startDrag(viewHolder)
     }
 
     var onEditorListener = TextView.OnEditorActionListener { textView, i, keyEvent ->

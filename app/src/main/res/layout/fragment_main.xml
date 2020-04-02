@@ -69,7 +69,7 @@
         android:layout_margin="2dp"
         app:fabSize="auto"
         android:id="@+id/fabSpeedDial"
-        android:backgroundTint="@color/colorAccent"
+        android:backgroundTint="#FF9933"
         android:foregroundTint="#fff"
         android:src="@drawable/ic_edittttt"
         android:elevation="8dp"

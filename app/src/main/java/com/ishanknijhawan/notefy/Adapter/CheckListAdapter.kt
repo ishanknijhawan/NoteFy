@@ -7,8 +7,8 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.Toast
@@ -17,14 +17,25 @@ import com.ishanknijhawan.notefy.Entity.Inception
 import com.ishanknijhawan.notefy.R
 import com.ishanknijhawan.notefy.ui.TextNoteActivity
 import kotlinx.android.synthetic.main.checklist_note_layout.view.*
+import org.jetbrains.anko.matchParent
 
 
-class CheckListAdapter(val items: MutableList<Inception>, val context: Context) :
+class CheckListAdapter(val items: MutableList<Inception>, val context: TextNoteActivity) :
     RecyclerView.Adapter<ViewHolder2>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder2 {
-        return ViewHolder2(LayoutInflater.from(context).inflate(R.layout.checklist_note_layout, parent, false))
+        val itemView = (LayoutInflater.from(context).inflate(R.layout.checklist_note_layout, parent, false))
+        val viewHolder = ViewHolder2(itemView)
+
+        viewHolder.itemView.ivDrag.setOnTouchListener { view, event ->
+            if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+                context.startDragging(viewHolder)
+            }
+            return@setOnTouchListener true
+        }
+
+        return viewHolder
     }
 
     override fun getItemCount(): Int = items.size
@@ -41,6 +52,7 @@ class CheckListAdapter(val items: MutableList<Inception>, val context: Context) 
 
     override fun onBindViewHolder(holder: ViewHolder2, position: Int) {
         holder.mainText.setText(items[position].inputName)
+
 //        holder.deleteButton.setOnClickListener {
 //            items.removeAt(position)
 //            notifyItemRemoved(position)
@@ -86,11 +98,22 @@ class CheckListAdapter(val items: MutableList<Inception>, val context: Context) 
 
         })
 
-        holder.ivDrag.setOnTouchListener { view, motionEvent ->
-            if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN){
-                TextNoteActivity().touchHelper?.startDrag(holder)
-            }
-            true
+//        holder.itemView.ivDrag.setOnTouchListener { view, motionEvent ->
+//
+//            if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN){
+//                TextNoteActivity().startDragging(holder)
+//            }
+//            return@setOnTouchListener true
+//        }
+    }
+
+    fun moveItem(from: Int, to: Int) {
+        val fromEmoji = items[from]
+        items.removeAt(from)
+        if (to < from) {
+            items.add(to, fromEmoji)
+        } else {
+            items.add(to - 1, fromEmoji)
         }
     }
 

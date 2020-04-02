@@ -69,6 +69,7 @@ class MainFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_main, container, false)
         val fab = view.findViewById<FloatingActionButton>(R.id.fabSpeedDial)
         val bab = view.findViewById<BottomAppBar>(R.id.bottom_app_bar)
+        bab.elevation = 8F
 
         val iv3 = view.findViewById<ImageView>(R.id.imageView99)
         val tv3 = view.findViewById<TextView>(R.id.textView99)
