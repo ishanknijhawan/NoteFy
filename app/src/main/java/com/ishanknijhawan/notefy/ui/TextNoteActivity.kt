@@ -7,6 +7,7 @@ import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.content.res.TypedArray
 import android.graphics.Bitmap
@@ -16,6 +17,7 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.speech.RecognizerIntent
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -24,6 +26,7 @@ import android.widget.*
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
@@ -129,6 +132,10 @@ class TextNoteActivity : AppCompatActivity() {
 
         window.navigationBarColor = finalColor
         window.statusBarColor = finalColor
+        ll_bs1.elevation = 16F
+        ll_bs2.elevation = 16F
+        cl_textNote.elevation = 10F
+        ll_toolbar1.elevation = 16F
 
         viewModel = ViewModelProviders.of(this).get(ViewModel::class.java)
 
@@ -152,6 +159,8 @@ class TextNoteActivity : AppCompatActivity() {
         val rq3 = intent.getStringExtra("DRAW")
         val rq4 = intent.getStringExtra("IMAGE_CAMERA")
         val rq5 = intent.getStringExtra("IMAGE_FILE")
+        val rq6 = intent.getStringArrayListExtra("AUDIO")
+
         val cardSize = intent.getIntExtra("CARD_SIZE", 0)
         val pathStringFromMain = intent.getStringExtra("PATH_TO_IMAGE")
 
@@ -173,9 +182,63 @@ class TextNoteActivity : AppCompatActivity() {
             startActivityForResult(intent, REQUEST_CODE_DRAW)
         }
 
+        bs_recording.setOnClickListener {
+            if ((ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+                        != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                        != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.RECORD_AUDIO
+                )
+                        != PackageManager.PERMISSION_GRANTED)
+            ) {
+                requestPermissions(
+                    arrayOf(
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        android.Manifest.permission.RECORD_AUDIO
+                    ), 1006
+                )
+            } else {
+                val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Try saying something!")
+
+                try {
+                    startActivityForResult(intent, 1009)
+                }catch (e: java.lang.Exception){
+                    Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         bs_draw.setOnClickListener {
-            val intent = Intent(this, DrawingActivity::class.java)
-            startActivityForResult(intent, REQUEST_CODE_DRAW)
+            if ((ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+                        != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                        != PackageManager.PERMISSION_GRANTED)
+            ) {
+                requestPermissions(
+                    arrayOf(
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ), 1000
+                )
+            } else {
+                val intent = Intent(this, DrawingActivity::class.java)
+                startActivityForResult(intent, REQUEST_CODE_DRAW)
+            }
         }
 
         if (rq4 == "opened_from_camera") {
@@ -184,8 +247,31 @@ class TextNoteActivity : AppCompatActivity() {
         }
 
         bs_camera.setOnClickListener {
-            val intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(intent, REQUEST_CODE_CAMERA)
+            if ((ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+                        != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                        != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.CAMERA
+                )
+                        != PackageManager.PERMISSION_GRANTED)
+            ) {
+                requestPermissions(
+                    arrayOf(
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        android.Manifest.permission.CAMERA
+                    ), 1001
+                )
+            } else {
+                val intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(intent, REQUEST_CODE_CAMERA)
+            }
         }
 
         if (rq5 == "opened_from_file") {
@@ -194,10 +280,34 @@ class TextNoteActivity : AppCompatActivity() {
             startActivityForResult(photoPickerIntent, REQUEST_CODE_GALLERY)
         }
 
+        try {
+            if (rq6!!.size > 0){
+                contentNote.setText(rq6[0])
+            }
+        } catch (e:NullPointerException){}
+
         bs_choose_file.setOnClickListener {
-            val photoPickerIntent = Intent(Intent.ACTION_PICK)
-            photoPickerIntent.type = "image/*"
-            startActivityForResult(photoPickerIntent, REQUEST_CODE_GALLERY)
+            if ((ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+                        != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                        != PackageManager.PERMISSION_GRANTED)
+            ) {
+                requestPermissions(
+                    arrayOf(
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ), 1002
+                )
+            } else {
+                val photoPickerIntent = Intent(Intent.ACTION_PICK)
+                photoPickerIntent.type = "image/*"
+                startActivityForResult(photoPickerIntent, REQUEST_CODE_GALLERY)
+            }
         }
 
         if (rq == "opened_from_main_activity") {
@@ -239,27 +349,27 @@ class TextNoteActivity : AppCompatActivity() {
             val activeNetworkInfo = connectivityManager.activeNetworkInfo
             val check =  activeNetworkInfo != null && activeNetworkInfo.isConnected
 
-            if(check){
-                if (description!!.contains("https")){
-                    //TODO: Enable rich link previews here :)
-                    richLinkView.setLink(
-                        description,
-                        object : ViewListener {
-                            override fun onSuccess(status: Boolean) {
-                                //Toast.makeText(this@TextNoteActivity, "converted", Toast.LENGTH_SHORT).show()
-                            }
-
-                            override fun onError(e: Exception) {
-                                Toast.makeText(
-                                    this@TextNoteActivity,
-                                    e.printStackTrace().toString(),
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        })
-                    richLinkView.visibility = View.VISIBLE
-                }
-            }
+//            if(check){
+//                if (description!!.contains("https")){
+//                    //TODO: Enable rich link previews here :)
+//                    richLinkView.setLink(
+//                        description,
+//                        object : ViewListener {
+//                            override fun onSuccess(status: Boolean) {
+//                                //Toast.makeText(this@TextNoteActivity, "converted", Toast.LENGTH_SHORT).show()
+//                            }
+//
+//                            override fun onError(e: Exception) {
+//                                Toast.makeText(
+//                                    this@TextNoteActivity,
+//                                    e.printStackTrace().toString(),
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+//                            }
+//                        })
+//                    richLinkView.visibility = View.VISIBLE
+//                }
+//            }
 
             if (finalColor == 0)
                 finalColor = -1
@@ -443,7 +553,7 @@ class TextNoteActivity : AppCompatActivity() {
         iv_archive.setOnClickListener {
 
             when {
-                !bigArchive -> {
+                !bigArchive && !kingPin -> {
                     iv_archive.setImageResource(R.drawable.ic_unarchive_black_24dp)
                     bigArchive = true
                     Toast.makeText(this, "Note Archived", Toast.LENGTH_SHORT).show()
@@ -456,6 +566,7 @@ class TextNoteActivity : AppCompatActivity() {
                 kingPin -> {
                     iv_archive.setImageResource(R.drawable.ic_unarchive_black_24dp)
                     bigArchive = true
+                    kingPin = false
                     Toast.makeText(this, "Note unpinned and Archived", Toast.LENGTH_SHORT).show()
                     if (rq == "opened_from_main_activity") {
                         updateNote()
@@ -501,6 +612,20 @@ class TextNoteActivity : AppCompatActivity() {
                 saveNote()
             }
             finish()
+        }
+
+        bs_duplicate.setOnClickListener {
+            if (contentNote.text.isEmpty()){
+                Snackbar.make(lll, "Can't generate copy of an empty note", Snackbar.LENGTH_LONG)
+                    .setAnchorView(bottomSheet2)
+                    .show()
+            }
+            else {
+                saveNote()
+                Snackbar.make(lll, "Duplicate note generated", Snackbar.LENGTH_SHORT)
+                    .setAnchorView(bottomSheet2)
+                    .show()
+            }
         }
 
         bs_share.setOnClickListener {
@@ -561,13 +686,8 @@ class TextNoteActivity : AppCompatActivity() {
                 !kingPin && !bigArchive -> {
                     iv_pin.setImageResource(R.drawable.ic_push_pin_black_final)
                     kingPin = true
-                    Toast.makeText(this, "Note Pinned", Toast.LENGTH_SHORT).show()
-                    if (rq == "opened_from_main_activity") {
-                        updateNote()
-                    } else {
-                        saveNote()
-                    }
                 }
+
                 bigArchive -> {
                     iv_archive.setImageResource(R.drawable.ic_archive_black_24dp)
                     iv_pin.setImageResource(R.drawable.ic_push_pin_black_final)
@@ -585,11 +705,6 @@ class TextNoteActivity : AppCompatActivity() {
                     iv_pin.setImageResource(R.drawable.ic_push_pin_final)
                     kingPin = false
                     //Toast.makeText(this,"Note unpinned",Toast.LENGTH_SHORT).show()
-                    if (rq == "opened_from_main_activity") {
-                        updateNote()
-                    } else {
-                        saveNote()
-                    }
                 }
             }
 
@@ -837,7 +952,7 @@ class TextNoteActivity : AppCompatActivity() {
             when (requestCode) {
                 REQUEST_CODE_DRAW -> {
                     val result = data.getByteArrayExtra("bitmap")
-                    bitmap = BitmapFactory.decodeByteArray(result, 0, result.size)
+                    bitmap = BitmapFactory.decodeByteArray(result, 0, result!!.size)
                     ivAddTNA.setImageBitmap(bitmap)
                     ivAddTNA.visibility = View.VISIBLE
                     saveImage(bitmap)
@@ -870,6 +985,15 @@ class TextNoteActivity : AppCompatActivity() {
                     outputStream.flush()
                     outputStream.close()
                 }
+                1009 -> {
+                    if (resultCode == Activity.RESULT_OK){
+                        try {
+                            val result: ArrayList<String>? = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                            var temp = ""
+                            contentNote.setText(result!![0])
+                        } catch (e: NullPointerException){}
+                    }
+                }
                 else -> {
                     TextNoteActivity().finish()
                 }
@@ -877,6 +1001,79 @@ class TextNoteActivity : AppCompatActivity() {
         }
 
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            1000 -> {
+                if (grantResults.isNotEmpty()
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                ) {
+                    val intent = Intent(this, DrawingActivity::class.java)
+                    startActivityForResult(intent, REQUEST_CODE_DRAW)
+
+                } else {
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+            1002 -> {
+                if (grantResults.isNotEmpty()
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                ) {
+                    val photoPickerIntent = Intent(Intent.ACTION_PICK)
+                    photoPickerIntent.type = "image/*"
+                    startActivityForResult(photoPickerIntent, REQUEST_CODE_GALLERY)
+
+                } else {
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+            1001 -> {
+                if (grantResults.isNotEmpty()
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[2] == PackageManager.PERMISSION_GRANTED
+                ) {
+                    val intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+                    startActivityForResult(intent, REQUEST_CODE_CAMERA)
+
+                } else {
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+            1006 -> {
+                if (grantResults.isNotEmpty()
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[2] == PackageManager.PERMISSION_GRANTED
+                ) {
+                    val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+                    intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Try saying something!")
+
+                    try {
+                        startActivityForResult(intent, 1009)
+                    }catch (e: java.lang.Exception){
+                        Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     private fun saveImage(bitmap: Bitmap) {

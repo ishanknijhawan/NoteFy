@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="#fff"
     android:id="@+id/fl_main"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    android:theme="@style/SteeingsTheme">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -57,8 +57,8 @@
 
         <ImageView
             android:id="@+id/imageView69"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
+            android:layout_width="244dp"
+            android:layout_height="156dp"
             app:layout_anchor="@+id/constraintLayout3"
             app:layout_anchorGravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -67,20 +67,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.446"
-            app:srcCompat="@drawable/ic_delete_big" />
+            app:srcCompat="@drawable/ic_undraw_delete" />
 
         <TextView
             android:id="@+id/textView69"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your deleted notes appear here"
+            android:text="No notes in recycle bin"
             android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/imageView69"
-            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="@+id/imageView69"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.553" />
+            app:layout_constraintVertical_bias="0.63" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

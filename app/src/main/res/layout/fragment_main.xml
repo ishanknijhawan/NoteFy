@@ -31,17 +31,18 @@
 
         <ImageView
             android:id="@+id/imageView99"
-            android:layout_width="match_parent"
-            android:layout_marginTop="220dp"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_notes_big" />
+            android:layout_width="245dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="170dp"
+            android:layout_height="155dp"
+            app:srcCompat="@drawable/ic_undraw_taking_notes" />
 
         <TextView
             android:id="@+id/textView99"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:text="Your notes appear here"
             android:textSize="14dp" />
 
@@ -68,8 +69,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
         app:fabSize="auto"
+        app:backgroundTint="@color/colorAccent"
+        app:tint="@color/white"
+        android:tint="@color/colorPrimary"
         android:id="@+id/fabSpeedDial"
-        android:backgroundTint="#FF9933"
+        android:backgroundTint="@color/colorAccent"
         android:foregroundTint="#fff"
         android:src="@drawable/ic_edittttt"
         android:elevation="8dp"

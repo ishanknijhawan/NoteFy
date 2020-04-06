@@ -2,6 +2,7 @@ package com.ishanknijhawan.notefy.ui
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -31,6 +32,9 @@ class FinalLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_final_login)
+
+        window.navigationBarColor = Color.parseColor("#FFFFFF")
+        window.statusBarColor = Color.parseColor("#FFFFFF")
 
         auth = FirebaseAuth.getInstance()
 

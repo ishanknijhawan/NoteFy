@@ -1,13 +1,17 @@
 package com.ishanknijhawan.notefy.Fragments
 
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.RecordingCanvas
+import android.media.MediaRecorder
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.speech.RecognizerIntent
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -38,7 +42,10 @@ import com.ishanknijhawan.notefy.ui.FinalLoginActivity
 import com.ishanknijhawan.notefy.ui.MainActivity
 import com.ishanknijhawan.notefy.ui.TextNoteActivity
 import kotlinx.android.synthetic.main.fragment_main.*
+import org.jetbrains.anko.support.v4.startActivityForResult
+import java.lang.Exception
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainFragment : Fragment() {
@@ -53,13 +60,14 @@ class MainFragment : Fragment() {
     lateinit var viewModel: ViewModel
     lateinit var getAllNotes: LiveData<List<Note>>
     lateinit var getAllPinned: LiveData<List<Note>>
-    lateinit var allNotes: List<Note>
-    lateinit var allPinned: List<Note>
+    var allNotes: List<Note> = listOf()
+    var allPinned: List<Note> = listOf()
     lateinit var noteAdapter: NoteAdapter
     lateinit var prefs: SharedPreferences
     lateinit var databaseReference: DatabaseReference
     lateinit var dialog: AlertDialog
     lateinit var dialogView: View
+    lateinit var mediaRecorder: MediaRecorder
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,13 +77,18 @@ class MainFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_main, container, false)
         val fab = view.findViewById<FloatingActionButton>(R.id.fabSpeedDial)
         val bab = view.findViewById<BottomAppBar>(R.id.bottom_app_bar)
-        bab.elevation = 8F
+        bab.elevation = 16F
 
         val iv3 = view.findViewById<ImageView>(R.id.imageView99)
         val tv3 = view.findViewById<TextView>(R.id.textView99)
 
         val tvPinned = view.findViewById<TextView>(R.id.tv_pinned)
         val tvOthers = view.findViewById<TextView>(R.id.tv_others)
+
+//        if (allPinned.isEmpty() && allNotes.isEmpty()){
+//            tvPinned.visibility = View.VISIBLE
+//            tvOthers.visibility = View.VISIBLE
+//        }
 
         (activity as AppCompatActivity?)!!.setSupportActionBar(bab)
         setHasOptionsMenu(true)
@@ -174,7 +187,7 @@ class MainFragment : Fragment() {
 //                            //view.background = resources.getDrawable(R.drawable.round_corner, null)
 //                        }
                         .setAnchorView(fab)
-                        .setActionTextColor(Color.parseColor("#FFA500"))
+                        .setActionTextColor(Color.parseColor("#c8c5ff"))
                         .setAction("Undo")
                         {
                             note.deleted = false
@@ -215,7 +228,7 @@ class MainFragment : Fragment() {
 //                            //view.background = resources.getDrawable(R.drawable.round_corner, null)
 //                        }
                         .setAnchorView(fab)
-                        .setActionTextColor(Color.parseColor("#FFA500"))
+                        .setActionTextColor(Color.parseColor("#c8c5ff"))
                         .setAction("Undo")
                         {
                             note.deleted = false
@@ -257,7 +270,7 @@ class MainFragment : Fragment() {
 //                            //view.background = resources.getDrawable(R.drawable.round_corner, null)
 //                        }
                         .setAnchorView(fab)
-                        .setActionTextColor(Color.parseColor("#FFA500"))
+                        .setActionTextColor(Color.parseColor("#c8c5ff"))
                         .setAction("Undo")
                         {
                             note.archive = false
@@ -290,16 +303,9 @@ class MainFragment : Fragment() {
 
                     viewModel.update(allNotes[position])
 
-                    val snackbar = Snackbar.make(fragmentContainer2, "Note archived", Snackbar.LENGTH_LONG)
-//                        .apply {
-//                            view.layoutParams =
-//                                (view.layoutParams as CoordinatorLayout.LayoutParams).apply {
-//                                    setMargins(16, 16, 16, 16)
-//                                }
-//                            //view.background = resources.getDrawable(R.drawable.round_corner, null)
-//                        }
+                    Snackbar.make(fragmentContainer2, "Note archived", Snackbar.LENGTH_LONG)
                         .setAnchorView(fab)
-                        .setActionTextColor(Color.parseColor("#FFA500"))
+                        .setActionTextColor(Color.parseColor("#c8c5ff"))
                         .setAction("Undo")
                         {
                             note.archive = false
@@ -342,24 +348,19 @@ class MainFragment : Fragment() {
 
             allNotes = getAllNotes.value!!
 
-            if (allNotes.isEmpty()){
+            if (allNotes.isEmpty() && allPinned.isEmpty()){
                 iv3.visibility = View.VISIBLE
                 tv3.visibility = View.VISIBLE
-            }
-            else {
-                iv3.visibility = View.GONE
-                tv3.visibility = View.GONE
-            }
-
-            if (allNotes.isEmpty()){
                 rv_main_list.visibility = View.GONE
                 tvPinned.visibility = View.GONE
                 tvOthers.visibility = View.GONE
             }
             else {
+                iv3.visibility = View.GONE
+                tv3.visibility = View.GONE
                 rv_main_list.visibility = View.VISIBLE
-                tvPinned.visibility = View.VISIBLE
-                tvOthers.visibility = View.VISIBLE
+//                tvPinned.visibility = View.VISIBLE
+//                tvOthers.visibility = View.VISIBLE
             }
 
 
@@ -382,14 +383,14 @@ class MainFragment : Fragment() {
 
             allPinned = getAllPinned.value!!
 
-            if (allPinned.isEmpty()){
+            if (allPinned.isEmpty() && allNotes.isEmpty()){
                 rv_pinned_list.visibility = View.GONE
                 tvPinned.visibility = View.GONE
                 tvOthers.visibility = View.GONE
                 iv3.visibility = View.VISIBLE
                 tv3.visibility = View.VISIBLE
             }
-            else {
+            else if(allPinned.isNotEmpty()) {
                 rv_pinned_list.visibility = View.VISIBLE
                 tvPinned.visibility = View.VISIBLE
                 tvOthers.visibility = View.VISIBLE
@@ -465,27 +466,60 @@ class MainFragment : Fragment() {
                 }
             }
             R.id.recording -> {
-                val gsoo = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id))
-                    .requestEmail()
-                    .build()
-                FinalLoginActivity.googleSignInClient =
-                    GoogleSignIn.getClient(this.requireContext(), gsoo)
+                if ((ContextCompat.checkSelfPermission(
+                        this.requireContext(),
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                            != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(
+                        this.requireContext(),
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                            != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(
+                        this.requireContext(),
+                        android.Manifest.permission.RECORD_AUDIO
+                    )
+                            != PackageManager.PERMISSION_GRANTED)
+                ) {
+                    requestPermissions(
+                        arrayOf(
+                            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            android.Manifest.permission.RECORD_AUDIO
+                        ), 42
+                    )
+                } else {
+                    val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+                    intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Try saying something!")
 
-                FinalLoginActivity.auth = FirebaseAuth.getInstance()
 
-                FinalLoginActivity.auth.signOut()
-                FinalLoginActivity.googleSignInClient.signOut()
-                //FinalLoginActivity.googleSignInClient.signOut()
-                val intent = Intent(this.requireContext(), FinalLoginActivity::class.java)
-                startActivity(intent)
-                //finish()
-                //Toast.makeText(this,"shopping list",Toast.LENGTH_SHORT).show()
+
+                    try {
+                        startActivityForResult(intent, 1211)
+                    }catch (e: Exception){
+                        Toast.makeText(this.requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
 
 
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode) {
+            1211 -> {
+                if (resultCode == Activity.RESULT_OK && null != data){
+                    val result: ArrayList<String>? = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                    val intent = Intent(this.requireContext(), TextNoteActivity::class.java)
+                    intent.putStringArrayListExtra("AUDIO", result)
+                    startActivity(intent)
+                }
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -539,6 +573,26 @@ class MainFragment : Fragment() {
                         .show()
                     dialog.dismiss()
                 }
+            }
+            42 -> {if (grantResults.isNotEmpty()
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                && grantResults[1] == PackageManager.PERMISSION_GRANTED
+                && grantResults[2] == PackageManager.PERMISSION_GRANTED
+            ) {
+                val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Try saying something!")
+
+                try {
+                    startActivityForResult(intent, 1211)
+                }catch (e: Exception){
+                    Toast.makeText(this.requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this.requireContext(), "Permission Denied", Toast.LENGTH_SHORT)
+                    .show()
+            }
             }
         }
 

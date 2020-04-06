@@ -25,16 +25,17 @@
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
+            android:layout_width="246dp"
+            android:layout_height="151dp"
             app:layout_anchor="@+id/constraintLayout"
             app:layout_anchorGravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.482"
-            app:srcCompat="@drawable/ic_archive_big" />
+            app:layout_constraintVertical_bias="0.425"
+            app:srcCompat="@drawable/ic_undraw_archive" />
 
         <TextView
             android:id="@+id/textView4"
@@ -44,10 +45,10 @@
             android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/imageView3"
-            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toStartOf="@+id/imageView3"
             app:layout_constraintTop_toTopOf="@+id/rv_archive"
-            app:layout_constraintVertical_bias="0.57" />
+            app:layout_constraintVertical_bias="0.608" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

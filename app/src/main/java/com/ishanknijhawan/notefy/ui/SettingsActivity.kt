@@ -10,11 +10,19 @@ import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.PreferenceFragment
 import android.preference.PreferenceManager
+import android.view.View
 import android.widget.ListView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.ishanknijhawan.notefy.R
+import kotlinx.android.synthetic.main.signout_layout.*
 import org.jetbrains.anko.backgroundColor
+import java.util.zip.Inflater
 
 class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -68,6 +76,13 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
         actionBar?.title = "  Settings"
         actionBar?.elevation = 0F
         actionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FAFAFA")))
+        val settingsView = layoutInflater.inflate(R.layout.signout_layout, null)
+
+        val tvSignout = settingsView.findViewById<TextView>(R.id.btnSignOut)
+        val tvPrivacy = settingsView.findViewById<TextView>(R.id.privacy_policy)
+
+        window.navigationBarColor = Color.parseColor("#FFFFFF")
+        window.statusBarColor = Color.parseColor("#FFFFFF")
 
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -79,6 +94,25 @@ class SettingsActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferen
             fragmentManager.beginTransaction()
                 .add(android.R.id.content, SettingsFragment()).commit()
 
+        }
+
+        tvSignout.setOnClickListener {
+            Toast.makeText(this,"clicked",Toast.LENGTH_SHORT).show()
+            val gsoo = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+            FinalLoginActivity.googleSignInClient =
+                GoogleSignIn.getClient(this, gsoo)
+
+            FinalLoginActivity.auth = FirebaseAuth.getInstance()
+
+            FinalLoginActivity.auth.signOut()
+            FinalLoginActivity.googleSignInClient.signOut()
+            //FinalLoginActivity.googleSignInClient.signOut()
+            val intent = Intent(this, FinalLoginActivity::class.java)
+            startActivity(intent)
+            //finish()
         }
     }
 

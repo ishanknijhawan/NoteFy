@@ -59,25 +59,25 @@ class NoteAdapter(var items: List<Note>, val context: Context)
         else
             holder.itemNoteLayout.strokeColor = Color.parseColor("#c8c8c8")
 
-            if (items[position].description.contains("https")){
-                //TODO: Enable rich link previews here :)
-                holder.ivLink.setLink(
-                    items[position].description,
-                    object : ViewListener {
-                        override fun onSuccess(status: Boolean) {
-                            //Toast.makeText(context, "converted", Toast.LENGTH_SHORT).show()
-                        }
-
-                        override fun onError(e: Exception) {
-                            Toast.makeText(
-                                context,
-                                e.printStackTrace().toString(),
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
-                holder.ivLink.visibility = View.VISIBLE
-            }
+//            if (items[position].description.contains("https")){
+//                //TODO: Enable rich link previews here :)
+//                holder.ivLink.setLink(
+//                    items[position].description,
+//                    object : ViewListener {
+//                        override fun onSuccess(status: Boolean) {
+//                            //Toast.makeText(context, "converted", Toast.LENGTH_SHORT).show()
+//                        }
+//
+//                        override fun onError(e: Exception) {
+//                            Toast.makeText(
+//                                context,
+//                                e.printStackTrace().toString(),
+//                                Toast.LENGTH_LONG
+//                            ).show()
+//                        }
+//                    })
+//                holder.ivLink.visibility = View.VISIBLE
+//            }
 
         if (holder.tvTitleView.text.isEmpty()){
             holder.tvTitleView.visibility = View.GONE

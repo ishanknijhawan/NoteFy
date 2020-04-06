@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -41,8 +42,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationview.setNavigationItemSelectedListener(this)
         navigationview.setItemIconTintList(null)
 
+        card_view_notefy.elevation = 7F
+
         window.navigationBarColor = Color.parseColor("#FFFFFF")
         window.statusBarColor = Color.parseColor("#FFFFFF")
+
         val goodMorning2 = navigationview.getHeaderView(0)
         val goodMorning = goodMorning2.findViewById<TextView>(R.id.tv_goodMorning)
 
@@ -79,25 +83,33 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             ).commit()
             navigationview.setCheckedItem(R.id.nav_notes) }
 
+
+
     }
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when(item.itemId) {
             R.id.nav_notes -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                    MainFragment()
-                ).commit()
+                Handler().postDelayed({
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
+                        MainFragment()
+                    ).commit()
+                },150)
             }
             R.id.nav_archive -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                    ArchiveFragment()
-                ).commit()
-                navigationview.setCheckedItem(R.id.nav_archive)
+                Handler().postDelayed({
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
+                        ArchiveFragment()
+                    ).commit()
+                },150)
             }
             R.id.nav_delete -> {
-                val intent = Intent(this, DeletedActivity::class.java)
-                startActivity(intent)
+                Handler().postDelayed({
+                    val intent = Intent(this, DeletedActivity::class.java)
+                    startActivity(intent)
+                },150)
             }
             R.id.action_labels -> {
 
@@ -106,9 +118,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
             R.id.nav_settings -> {
-                val intent = Intent(this, SettingsActivity::class.java)
-                startActivity(intent)
-                finish()
+                Handler().postDelayed({
+                    val intent = Intent(this, SettingsActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                },150)
             }
             R.id.help_and_feedback -> {
 
@@ -127,3 +141,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 }
+

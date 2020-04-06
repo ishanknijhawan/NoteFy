@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.ishanknijhawan.notefy.Entity.Inception
 import com.ishanknijhawan.notefy.R
+import com.ishanknijhawan.notefy.ui.TextNoteActivity
 import kotlinx.android.synthetic.main.card_ist_note_layout.view.*
 import org.jetbrains.anko.textColor
 

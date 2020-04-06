@@ -5,6 +5,7 @@ import android.annotation.TargetApi
 import android.app.KeyguardManager
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.hardware.fingerprint.FingerprintManager
 import android.os.Build
 import android.os.Bundle
@@ -34,6 +35,9 @@ class fingerPrintActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_finger_print)
+
+        window.navigationBarColor = Color.parseColor("#FFFFFF")
+        window.statusBarColor = Color.parseColor("#FFFFFF")
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             val fingerprintManager = getSystemService(Context.FINGERPRINT_SERVICE) as FingerprintManager

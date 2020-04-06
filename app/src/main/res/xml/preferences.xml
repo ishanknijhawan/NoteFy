@@ -2,8 +2,6 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-<!--    <Preference-->
-<!--        android:layout="@layout/item_note_layout"/>-->
 
     <PreferenceCategory android:title="DISPLAY OPTIONS">
         <SwitchPreference
@@ -52,5 +50,8 @@
 
 
     </PreferenceCategory>
+
+        <Preference
+            android:layout="@layout/signout_layout"/>
 
 </PreferenceScreen>

@@ -2,6 +2,7 @@ package com.ishanknijhawan.notefy.ui
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -36,6 +37,9 @@ class DeletedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_deleted)
         prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
+        window.navigationBarColor = Color.parseColor("#FFFFFF")
+        window.statusBarColor = Color.parseColor("#FFFFFF")
 
         val user = FirebaseAuth.getInstance().currentUser?.uid
         databaseReference = FireStore.getDatabase(user.toString())!!

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:padding="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground"
+        android:id="@+id/privacy_policy"
+        android:textSize="16dp"
+        android:text="Privacy policy"
+        android:textColor="#222222"
+        android:drawablePadding="36dp"
+        android:drawableLeft="@drawable/ic_shield"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#e6eaed"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:padding="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground"
+        android:id="@+id/btnSignOut"
+        android:textSize="16dp"
+        android:text="Sign out"
+        android:textColor="#222222"
+        android:drawablePadding="36dp"
+        android:drawableLeft="@drawable/ic_turn_off"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

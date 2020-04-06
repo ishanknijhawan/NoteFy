@@ -1,6 +1,7 @@
 package com.ishanknijhawan.notefy.ui
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -15,6 +16,9 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.navigationBarColor = Color.parseColor("#FFFFFF")
+        window.statusBarColor = Color.parseColor("#FFFFFF")
 
         //Toast.makeText(this,"value is ${prefs2.getBoolean("switch4",false)}",Toast.LENGTH_SHORT).show()
         askforFingerPrint()
