@@ -1,9 +1,30 @@
----
+<!DOCTYPE html>
+<html>
 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoteFy</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
 
----
+<body class="stackedit">
+  <div class="stackedit__left">
+    <div class="stackedit__toc">
+      
+<ul>
+<li><a href="#notefy-notes">NoteFy Notes</a>
+<ul>
+<li><a href="#features">Features</a></li>
+</ul>
+</li>
+</ul>
 
-<h1 id="notefy-notes">NoteFy Notes</h1>
+    </div>
+  </div>
+  <div class="stackedit__right">
+    <div class="stackedit__html">
+      <h1 id="notefy-notes">NoteFy Notes</h1>
 <p>The Ultimate note taking Android application.</p>
 <h2 id="features">Features</h2>
 <ul>
@@ -16,6 +37,7 @@
 <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked="true" disabled=""> Archive your notes</li>
 <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked="true" disabled=""> Pin notes on top</li>
 <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked="true" disabled=""> change notes color</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked="true" disabled=""> Swipe notes to Delete/Archive</li>
 <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled=""> Calendar Events</li>
 <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled=""> Online backup</li>
 <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="">  Dark Theme</li>
@@ -54,3 +76,8 @@
 </tr>
 </tbody>
 </table>
+    </div>
+  </div>
+</body>
+
+</html>
