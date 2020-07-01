@@ -5,7 +5,7 @@
 
 <h1 id="notefy-notes">NoteFy Notes</h1>
 <p>The Ultimate note taking Android application.</p>
-<p>Download the app from <a href="https://drive.google.com/open?id=1qdu1CTbq7pIosuTek7peyt01V0UlsOHz">here</a></p>
+<p>Download the app from <a href="https://drive.google.com/file/d/1l5Jk8C68UX739b4H2vY-ph99Wm3Mjt0U/view?usp=sharing">here</a></p>
 <h2 id="features">Features</h2>
 <ul>
 <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" checked="true" disabled=""> Add, Edit, Delete notes</li>
