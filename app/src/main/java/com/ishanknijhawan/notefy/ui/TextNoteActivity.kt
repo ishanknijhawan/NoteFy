@@ -132,9 +132,6 @@ class TextNoteActivity : AppCompatActivity() {
 
         window.navigationBarColor = finalColor
         window.statusBarColor = finalColor
-        ll_bs1.elevation = 16F
-        ll_bs2.elevation = 16F
-        cl_textNote.elevation = 10F
         ll_toolbar1.elevation = 16F
 
         viewModel = ViewModelProviders.of(this).get(ViewModel::class.java)
@@ -320,11 +317,11 @@ class TextNoteActivity : AppCompatActivity() {
 
             if (bool == "true") {
                 iv_pin.setImageResource(android.R.color.transparent)
-                iv_pin.setImageResource(R.drawable.ic_push_pin_black_final)
+                iv_pin.setImageResource(R.drawable.ic_thumbtack)
             } else if (bool == "false") {
                 Log.i("BG", "setting this bg")
                 iv_pin.setImageResource(android.R.color.transparent)
-                iv_pin.setImageResource(R.drawable.ic_push_pin_final)
+                iv_pin.setImageResource(R.drawable.ic_tack_save_button_empty)
             }
 
             if (pathStringFromMain != "") {
@@ -382,8 +379,8 @@ class TextNoteActivity : AppCompatActivity() {
             etAddCheck.hintTextColor = darkenColorHint(finalColor)
 
             lll.backgroundColor = finalColor
-            ll_bs1.backgroundColor = finalColor
-            ll_bs2.backgroundColor = finalColor
+            bottomSheet.backgroundColor = finalColor
+            bottomSheet2.backgroundColor = finalColor
             ll_toolbar1.backgroundColor = finalColor
             titleNote.backgroundColor = finalColor
             contentNote.backgroundColor = finalColor
@@ -433,7 +430,7 @@ class TextNoteActivity : AppCompatActivity() {
                 iv_archive.setImageResource(R.drawable.ic_unarchive_black_24dp)
             }
         } else {
-            iv_pin.setImageResource(R.drawable.ic_push_pin_final)
+            iv_pin.setImageResource(R.drawable.ic_tack_save_button_empty)
             iv_archive.setImageResource(R.drawable.ic_archive_black_24dp)
         }
 
@@ -457,6 +454,7 @@ class TextNoteActivity : AppCompatActivity() {
         reminder_chip.setOnCheckedChangeListener { compoundButton, b ->
             Toast.makeText(this, "Checked $b", Toast.LENGTH_SHORT).show()
         }
+        //test commit
         reminder_chip.visibility = View.GONE
 
         bottomSheetBehavior.setBottomSheetCallback(object :
@@ -629,8 +627,10 @@ class TextNoteActivity : AppCompatActivity() {
         }
 
         bs_share.setOnClickListener {
-            if (contentNote.text.isEmpty())
-                Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show()
+            if (contentNote.text.isEmpty() && titleNote.text.isEmpty())
+                Snackbar.make(lll, "Can't share empty note", Snackbar.LENGTH_LONG)
+                    .setAnchorView(bottomSheet2)
+                    .show()
             else{
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
@@ -684,13 +684,13 @@ class TextNoteActivity : AppCompatActivity() {
 
             when {
                 !kingPin && !bigArchive -> {
-                    iv_pin.setImageResource(R.drawable.ic_push_pin_black_final)
+                    iv_pin.setImageResource(R.drawable.ic_thumbtack)
                     kingPin = true
                 }
 
                 bigArchive -> {
                     iv_archive.setImageResource(R.drawable.ic_archive_black_24dp)
-                    iv_pin.setImageResource(R.drawable.ic_push_pin_black_final)
+                    iv_pin.setImageResource(R.drawable.ic_thumbtack)
                     kingPin = true
                     bigArchive = false
                     Toast.makeText(this, "Note unarchived and Pinned", Toast.LENGTH_SHORT).show()
@@ -702,19 +702,19 @@ class TextNoteActivity : AppCompatActivity() {
                     finish()
                 }
                 else -> {
-                    iv_pin.setImageResource(R.drawable.ic_push_pin_final)
+                    iv_pin.setImageResource(R.drawable.ic_tack_save_button_empty)
                     kingPin = false
                     //Toast.makeText(this,"Note unpinned",Toast.LENGTH_SHORT).show()
                 }
             }
 
-//            if (iv_pin.background.constantState == resources.getDrawable(R.drawable.ic_push_pin_final).constantState){
-//                iv_pin.setImageResource(R.drawable.ic_push_pin_black_final)
+//            if (iv_pin.background.constantState == resources.getDrawable(R.drawable.ic_tack_save_button_empty).constantState){
+//                iv_pin.setImageResource(R.drawable.ic_thumbtack)
 //                kingPin = true
 //                updateNote()
 //            }
-//            else if(iv_pin.background.constantState == resources.getDrawable(R.drawable.ic_push_pin_black_final).constantState) {
-//                iv_pin.setImageResource(R.drawable.ic_push_pin_final)
+//            else if(iv_pin.background.constantState == resources.getDrawable(R.drawable.ic_thumbtack).constantState) {
+//                iv_pin.setImageResource(R.drawable.ic_tack_save_button_empty)
 //                kingPin = false
 //                updateNote()
 //            }
@@ -836,8 +836,8 @@ class TextNoteActivity : AppCompatActivity() {
         lll.backgroundColor = color
         et_note_title.backgroundColor = color
         et_note_content.backgroundColor = color
-        ll_bs1.backgroundColor = color
-        ll_bs2.backgroundColor = color
+        bottomSheet.backgroundColor = color
+        bottomSheet2.backgroundColor = color
         ll_toolbar1.backgroundColor = color
         cl_textNote.backgroundColor = color
         reminder_chip.chipBackgroundColor = ColorStateList.valueOf(color)

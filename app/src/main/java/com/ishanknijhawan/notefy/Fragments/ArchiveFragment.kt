@@ -90,7 +90,7 @@ class ArchiveFragment : Fragment() {
 //                                    setMargins(16, 16, 16, 16)
 //                                }
 //                        }
-                        .setActionTextColor(Color.parseColor("#6C63FF"))
+                        .setActionTextColor(Color.parseColor("#c8c5ff"))
                         .setAction("Undo")
                         {
                             note.archive = true
@@ -129,7 +129,7 @@ class ArchiveFragment : Fragment() {
 //                                    setMargins(16, 16, 16, 16)
 //                                }
 //                        }
-                        .setActionTextColor(Color.parseColor("#6C63FF"))
+                        .setActionTextColor(Color.parseColor("#c8c5ff"))
                         .setAction("Undo")
                         {
                             note.archive = true

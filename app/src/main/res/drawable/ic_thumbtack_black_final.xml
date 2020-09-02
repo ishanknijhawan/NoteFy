@@ -3,5 +3,6 @@
     <path android:fillColor="#FFFFFF"
         android:pathData="M-101,247l18,0l0,0z"
         android:strokeColor="#000000" android:strokeWidth="1"/>
-    <path android:fillColor="#FF000000" android:pathData="M357,255V83V51V14H152.2V0H152v51h1v204l-51,51v51h132.6v153h40.8V357H408v-51L357,255zM199.9,318h-55.7c0,0 10.2,-10.2 55.7,-57.2V54H314v206.8h-1.1l52.9,57.2H199.9z"/>
+    <path android:fillColor="#FF000000" android:pathData="M357,255V83V51V14H152.2V0H152v51h1v204l-51,51v51h132.6v153h40.8V357H408v-51L357,255z"/>
+    <path android:fillColor="#FF000000" android:pathData="M312.9,260.8l52.9,57.2H199.9h-55.7c0,0 10.2,-10.2 55.7,-57.2V54H314v206.8H312.9z"/>
 </vector>

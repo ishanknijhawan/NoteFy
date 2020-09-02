@@ -40,16 +40,6 @@ class CheckListAdapter(val items: MutableList<Inception>, val context: TextNoteA
 
     override fun getItemCount(): Int = items.size
 
-//    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        holder.mainText.text = items[position]
-//
-//        holder.deleteThis.setOnClickListener {
-//            items.removeAt(position)
-//            notifyItemRemoved(position)
-//            notifyItemRangeChanged(position, items.size)
-//        }
-//    }
-
     override fun onBindViewHolder(holder: ViewHolder2, position: Int) {
         holder.mainText.setText(items[position].inputName)
 
@@ -93,28 +83,10 @@ class CheckListAdapter(val items: MutableList<Inception>, val context: TextNoteA
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                items[position].inputName = holder.editTextCB.text.toString()
+                items[position].inputName = p0.toString()
             }
 
         })
-
-//        holder.itemView.ivDrag.setOnTouchListener { view, motionEvent ->
-//
-//            if (motionEvent.actionMasked == MotionEvent.ACTION_DOWN){
-//                TextNoteActivity().startDragging(holder)
-//            }
-//            return@setOnTouchListener true
-//        }
-    }
-
-    fun moveItem(from: Int, to: Int) {
-        val fromEmoji = items[from]
-        items.removeAt(from)
-        if (to < from) {
-            items.add(to, fromEmoji)
-        } else {
-            items.add(to - 1, fromEmoji)
-        }
     }
 
 }
@@ -124,5 +96,4 @@ class ViewHolder2(view: View) : RecyclerView.ViewHolder(view) {
     val mainText = view.et_check_list
     //val deleteButton = view.iv_delete
     val editTextCB = view.et_check_list
-    val ivDrag: ImageView = view.ivDrag
 }

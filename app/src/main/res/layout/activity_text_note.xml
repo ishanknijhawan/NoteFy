@@ -56,11 +56,11 @@
                 android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.742"
+                app:layout_constraintHorizontal_bias="0.752"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.571"
-                app:srcCompat="@drawable/ic_push_pin_final" />
+                app:srcCompat="@drawable/ic_tack_save_button_empty" />
 
             <ImageButton
                 android:id="@+id/iv_reminder"
@@ -135,11 +135,11 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="25dp"
                     android:padding="8dp"
                     android:background="@drawable/simple_white_background"
-                    android:hint="+     List item.."
-                    android:layout_marginBottom="50dp"
+                    android:hint="+  Add item.."
+                    android:layout_marginBottom="55dp"
                     android:textSize="18dp"
                     android:imeOptions="actionDone"
                     android:inputType="text"
@@ -287,18 +287,20 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:elevation="15dp"
             android:id="@+id/bottomSheet"
             app:behavior_peekHeight="0dp"
+            android:background="#ffffff"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
             android:layout_height="wrap_content">
 
             <LinearLayout android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:background="#FFFFFF"
                 android:padding="10dp"
+                android:background="@drawable/border"
                 android:id="@+id/ll_bs1"
-                android:elevation="10dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="50dp"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -340,7 +342,7 @@
                     android:textSize="16dp"
                     android:layout_marginLeft="5dp"
                     android:id="@+id/bs_draw"
-                    android:drawableLeft="@drawable/ic_brush"
+                    android:drawableLeft="@drawable/ic_brush_final"
                     android:padding="10dp"
                     android:textColor="#222222"
                     android:drawablePadding="30dp"
@@ -384,17 +386,19 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:elevation="15dp"
             android:id="@+id/bottomSheet2"
             app:behavior_peekHeight="0dp"
+            android:background="#ffffff"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
             android:layout_height="wrap_content">
 
             <LinearLayout android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:background="#FFFFFF"
+                android:background="@drawable/border"
                 android:padding="10dp"
-                android:elevation="10dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="50dp"
                 android:id="@+id/ll_bs2"
                 android:layout_height="wrap_content">
 
